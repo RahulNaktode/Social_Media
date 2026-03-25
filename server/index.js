@@ -35,7 +35,7 @@ app.get('/auth', function (req, res) {
 app.post("/register", postRegister);
 app.post("/login", postLogin);
 
-app.get("/:id", checkJWT, getUser);
+app.get("/user/:id", checkJWT, getUser);
 app.get("/:id/friends", checkJWT, getUserFriends);
 app.put("/:id/:friendId", checkJWT, addRemoveFriends);
 

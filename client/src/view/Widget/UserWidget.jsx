@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {  getUserData } from '../../utils';
+import { getUserJwtToken, getUserData } from '../../utils.jsx';
 import axios from 'axios';
 import { MapPin, BriefcaseBusiness } from 'lucide-react';
 import LinkedinImg from './../../assets/linkedin.png';
@@ -7,13 +7,29 @@ import TwitterImg from '../../assets/twitter.png';
 
 function Widget() {
     const [userData, setUserData] = useState(null);
+    const userId = getUserData()._id;
+
+    const fetchUserData = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8080/user/${userId}`, {
+                headers: {
+                    Authorization: `Bearer ${getUserJwtToken()}`
+                }
+            });
+            if (response.data.success) {
+                setUserData(response.data.data);
+            } else {
+                console.error("Failed to fetch user data:", response.data.message);
+            }
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+        }
+    };
 
     useEffect(() => {
-        const data = getUserData();
-        console.log("User Data in Widget:", data);
-        setUserData(data);
-        
+        fetchUserData();
     }, []);
+
 
     if(!userData){
         return null;
@@ -22,7 +38,7 @@ function Widget() {
     const { firstName, lastName, photos, location, occupation, viewedProfile, impressions, friends } = userData;
 
   return (
-    <div className='border border-gray-300 shadow p-3 w-70 mt-5 rounded mx-2'>
+    <div className='border border-gray-300 shadow p-3 w-80 mt-5 rounded'>
       <div className='flex items-center border-b-2 border-gray-300 pb-3'>
           <div>
          <img src={photos[0]} alt="Profile" className='w-14 h-14 rounded-full object-cover mb-2' />
