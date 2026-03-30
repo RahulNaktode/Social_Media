@@ -167,7 +167,7 @@ function Signup() {
               />
               
               <Button title={"Register"} variant={"primary"} size={"medium"} onClick={createUser} />
-                <Link to="/login"
+                <Link to="/"
                 className='text-blue-500 hover:text-blue-700 text-lg'
                 >Already have an account? Login</Link>
             </div>

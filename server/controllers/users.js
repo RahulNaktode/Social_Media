@@ -6,7 +6,7 @@ dotenv.config();
 const getUser = async (req, res) => {
     try{
         const { id } = req.params;
-        const user = await User.findById(id);
+        const user = await User.findById(id).populate("friends");
 
         if(!user){
             return res.json({
@@ -64,23 +64,22 @@ const addRemoveFriends = async (req, res) => {
         const user = await User.findById(id);
         const friend = await User.findById(friendId);
 
-        if(user.friends.includes(friendId)){
-            user.friends = user.friends.filter(id => id !== friendId);
-            friend.friends = friend.friends.filter(id => id !== id);
-        }else{
-            user.friends.push(friendId);
-            friend.friends.push(id);
+        if (user.friends.includes(friendId)) {
+            // Remove from both
+            await User.findByIdAndUpdate(id, { $pull: { friends: friendId } });
+            await User.findByIdAndUpdate(friendId, { $pull: { friends: id } });
+        } else {
+            // Add to both
+            await User.findByIdAndUpdate(id, { $push: { friends: friendId } });
+            await User.findByIdAndUpdate(friendId, { $push: { friends: id } });
         }
-        await user.save();
-        await friend.save();
+        
 
-        const friends = await Promise.all(
-            user.friends.map(friendId => User.findById(friendId))
-        );
+        const updatedUser = await User.findById(id).populate("friends");
 
-        const formattedFriends = friends.map(
+        const formattedFriends = updatedUser.friends.map(
             ({ _id, firstName, lastName, occupation, location, photos }) => {
-                return { _id, firstName, lastName, occupation, location, photos }
+                return { _id, firstName, lastName, occupation, location, photos };
             }
         );
 

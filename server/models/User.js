@@ -33,13 +33,14 @@ const userSchema =new Schema({
         default: []
     },
 
-    friends: {
-        type: Array,
-        default: []
-    },
+    friends: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+}],
 
     location: {
         type: String,
+        required: true,
     },
 
     occupation: {

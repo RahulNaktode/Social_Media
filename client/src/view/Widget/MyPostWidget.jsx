@@ -16,7 +16,7 @@ import Button from '../../components/Button.jsx';
 function GetWidget() {
     const [posts, setPosts] = useState("");
     const [userData, setUserData] = useState(null);
-    const [isPhotoUpload, setIsPhotoUpload] = useState(false);
+    const [isPhotoUpload, setIsPhotoUpload] = useState(null);
     const [progress, setProgress] = useState(0);
     const fileInputRef = useRef();
 
@@ -127,7 +127,7 @@ function GetWidget() {
             {
                 userId,
                 description: posts,
-                picturePath: isPhotoUpload ? isPhotoUpload.url : "",
+                picturePath: isPhotoUpload ? isPhotoUpload.url : [],
             },
             {
                 headers: {
@@ -137,7 +137,7 @@ function GetWidget() {
 
         const post = await response.data;
         setPosts("");
-        setIsPhotoUpload(false);
+        setIsPhotoUpload(null);
     }
 
     return (
@@ -159,6 +159,11 @@ function GetWidget() {
                     type="file"
                     ref={fileInputRef}
                     className='border border-gray-300 px-2 py-1 rounded w-full mt-3 text-gray-400'
+                    onChange={(e) => {
+                        if(e.target.files.length > 0){
+                            handleUpload();
+                        }
+                    }}
                 />
             </div>
 
@@ -167,7 +172,7 @@ function GetWidget() {
                 <div className='flex items-center gap-2 cursor-pointer'><Clapperboard />Clip</div>
                 <div className='flex items-center gap-2 cursor-pointer'><Paperclip />Attachment</div>
                 <div className='flex items-center gap-2 cursor-pointer'><Mic />Audio</div>
-                <Button title='Post' size='small' variant='primary' onChange={handleUpload} onClick={postHandle} />
+                <Button title='Post' size='small' variant='primary' onClick={postHandle} />
             </div>
         </div>
     )

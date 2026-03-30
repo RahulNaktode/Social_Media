@@ -24,7 +24,7 @@ const postSchema = new Schema({
         type: String,
     },
 
-    photos: {
+    picturePath: {
         type: [String],
         default: []
     },

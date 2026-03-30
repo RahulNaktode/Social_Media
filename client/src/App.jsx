@@ -27,8 +27,8 @@ function App() {
         <CssBaseline />
         <BrowserRouter>
           <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/login' element={<Login />} />
+            <Route path='/home' element={<Home />} />
+            <Route path='/' element={<Login />} />
             <Route path='/register' element={<Signup />} />
           </Routes>
         </BrowserRouter>

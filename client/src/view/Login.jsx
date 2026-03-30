@@ -31,7 +31,7 @@ function Login() {
             localStorage.setItem("userData", JSON.stringify(data));
 
             setTimeout(() => {
-                window.location.href = "/";
+                window.location.href = "/home";
             }, 1500);
             
         }else{

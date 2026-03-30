@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
 const postRegister = async (req, res) => {
-    const { firstName, lastName, email, password,photos, friends, Location,  occupation } = req.body;
+    const { firstName, lastName, email, password,photos, friends, location,  occupation } = req.body;
 
     if(!firstName){
         return res.json({
@@ -56,7 +56,7 @@ const postRegister = async (req, res) => {
         password: encryptedPassword,
         photos,
         friends,
-        Location,
+        location: location || "",
         occupation,
         viewedProfile: Math.floor(Math.random() * 10000),
         impressions: Math.floor(Math.random() * 10000)

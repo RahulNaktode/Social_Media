@@ -5,7 +5,7 @@ dotenv.config();
 
 const createPost = async (req, res) => {
     try{
-        const {userId, description, photos} = req.body;
+        const {userId, description, picturePath} = req.body;
         const user = await User.findById(userId);
         if(!user){
             return res.json({
@@ -19,15 +19,16 @@ const createPost = async (req, res) => {
             userId,
             firstName: user.firstName,
             lastName: user.lastName,
+            location: user.location,
             description,
             userPhotos: user.photos,
-            photos,
+            picturePath,
             likes: {},
             comments: []
         })
         await newPost.save();
 
-        const posts = await Post.find();
+        const posts = await Post.find().populate("userId");
         return res.json({
             success: true,
             message: "Post created successfully",
@@ -44,7 +45,7 @@ const createPost = async (req, res) => {
 
 const getFeedPosts = async (req, res) => {
     try{
-        const posts = await Post.find();   
+        const posts = await Post.find().populate("userId");   
         return res.json({
             success: true,
             message: "Posts fetched successfully",
@@ -62,7 +63,7 @@ const getFeedPosts = async (req, res) => {
 const getUserPosts = async (req, res) => {
     try{
         const { userId } = req.params;
-        const post = await Post.find({ userId });
+        const post = await Post.find({ userId }).populate("userId");
         return res.json({
             success: true,
             message: "User posts fetched successfully",
@@ -78,36 +79,46 @@ const getUserPosts = async (req, res) => {
 }
 
 const likePost = async (req, res) => {
-    try{
-        const { id} = req.params;
+    try {
+        const { id } = req.params;
         const { userId } = req.body;
+
         const post = await Post.findById(id);
+
+        if (!post) {
+            return res.json({
+                success: false,
+                message: "Post not found",
+                data: null
+            });
+        }
+
         const isLiked = post.likes.get(userId);
 
-        if(isLiked){
+        if (isLiked) {
             post.likes.delete(userId);
-        }else{
+        } else {
             post.likes.set(userId, true);
         }
 
-        const updatedPost = await Post.findByIdAndUpdate(
-            id,
-            {likes: post.likes},
-            {new: true}
-        );
+        await post.save();
 
         return res.json({
             success: true,
             message: "Post liked successfully",
-            data: updatedPost
-        })
-    }catch(error){
+            data: {
+                ...post._doc,
+                likes: Object.fromEntries(post.likes)
+            }
+        });
+
+    } catch (error) {
         return res.json({
             success: false,
             message: `Error liking post: ${error.message}`,
             data: null
-        })
+        });
     }
-}
+};
 
 export { createPost, getFeedPosts, getUserPosts, likePost }

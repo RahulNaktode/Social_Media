@@ -2,6 +2,8 @@ import React from 'react'
 import Navbar from '../components/Navbar'
 import UserWidget from './Widget/UserWidget.jsx'
 import MyPostWidget from './Widget/MyPostWidget.jsx'
+import PostsWidget from './Widget/PostsWidget.jsx'
+
 
 function Home() {
   return (
@@ -13,6 +15,7 @@ function Home() {
       </div>
       <div>
         <MyPostWidget />
+        <PostsWidget />
       </div>
       </div>
     </div>

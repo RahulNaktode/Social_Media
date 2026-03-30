@@ -37,12 +37,12 @@ app.post("/login", postLogin);
 
 app.get("/user/:id", checkJWT, getUser);
 app.get("/:id/friends", checkJWT, getUserFriends);
-app.put("/:id/:friendId", checkJWT, addRemoveFriends);
+app.patch("/user/:id/:friendId", checkJWT, addRemoveFriends);
 
 app.post("/posts", checkJWT, createPost);
 app.get("/posts", checkJWT, getFeedPosts);
-app.get("/:userId/posts", checkJWT, getUserPosts);
-app.patch("/:id/like", checkJWT, likePost);
+app.get("/post/:userId/posts", checkJWT, getUserPosts);
+app.patch("/posts/:id/like", checkJWT, likePost);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

@@ -36,7 +36,7 @@ function Widget() {
     }
 
     const { firstName, lastName, photos, location, occupation, viewedProfile, impressions, friends } = userData;
-
+    
   return (
     <div className='border border-gray-300 shadow p-3 w-80 mt-5 rounded'>
       <div className='flex items-center border-b-2 border-gray-300 pb-3'>
@@ -51,6 +51,7 @@ function Widget() {
 
       <div className='border-b-2 border-gray-300 py-3'>
         <p className='flex items-center gap-2 mb-2'><MapPin size={22}/>{location}</p>
+        
         <p className='flex items-center gap-2'><BriefcaseBusiness size={22}/>{occupation}</p>
       </div>
 
