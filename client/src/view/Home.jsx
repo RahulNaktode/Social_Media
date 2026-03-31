@@ -3,6 +3,9 @@ import Navbar from '../components/Navbar'
 import UserWidget from './Widget/UserWidget.jsx'
 import MyPostWidget from './Widget/MyPostWidget.jsx'
 import PostsWidget from './Widget/PostsWidget.jsx'
+import AdvertWidget from './Widget/AdvertWidget.jsx'
+import FriendListWidget from './Widget/FriendListWidget.jsx'
+import { getUserData } from '../utils.jsx'
 
 
 function Home() {
@@ -16,6 +19,10 @@ function Home() {
       <div>
         <MyPostWidget />
         <PostsWidget />
+      </div>
+      <div>
+        <AdvertWidget />
+        <FriendListWidget/>
       </div>
       </div>
     </div>

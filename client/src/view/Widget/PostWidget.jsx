@@ -62,18 +62,17 @@ function PostWidget({ postId, postUserId, name, description, location, picturePa
 
             <div className='flex items-center gap-1 cursor-pointer' >
 
-              <MessageSquareText onClick={() => setIsComments(!isComments)} /><span>comments</span>
+              <MessageSquareText onClick={() => setIsComments(!isComments)} /><span>{comments.length}</span>
               <div>
                 {isComments && (
                   <div className='mt-3'>
                     {comments.map((comment, index) => (
                       <div key={`${name}-${index}`} className='mb-2'>
-                        <p className='text-gray-700'><strong>{comment.name}:</strong> {comment.text}</p>
+                        <p className='text-gray-700'>{comment}</p>
                       </div>
                     ))}
                   </div>
                 )}
-
               </div>
             </div>
           </div>

@@ -36,7 +36,7 @@ app.post("/register", postRegister);
 app.post("/login", postLogin);
 
 app.get("/user/:id", checkJWT, getUser);
-app.get("/:id/friends", checkJWT, getUserFriends);
+app.get("/user/:id/friends", checkJWT, getUserFriends);
 app.patch("/user/:id/:friendId", checkJWT, addRemoveFriends);
 
 app.post("/posts", checkJWT, createPost);

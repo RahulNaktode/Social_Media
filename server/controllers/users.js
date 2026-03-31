@@ -4,11 +4,11 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const getUser = async (req, res) => {
-    try{
+    try {
         const { id } = req.params;
         const user = await User.findById(id).populate("friends");
 
-        if(!user){
+        if (!user) {
             return res.json({
                 success: false,
                 message: "User not found",
@@ -20,7 +20,7 @@ const getUser = async (req, res) => {
             message: "User found",
             data: user
         })
-    }catch(error){
+    } catch (error) {
         return res.json({
             success: false,
             message: `Error fetching user: ${error.message}`,
@@ -30,7 +30,7 @@ const getUser = async (req, res) => {
 }
 
 const getUserFriends = async (req, res) => {
-    try{
+    try {
         const { id } = req.params;
         const user = await User.findById(id);
 
@@ -40,7 +40,14 @@ const getUserFriends = async (req, res) => {
 
         const formattedFriends = friends.map(
             ({ _id, firstName, lastName, occupation, location, photos }) => {
-                return { _id, firstName, lastName, occupation, location, photos }
+                return {
+                    _id,
+                    firstName,
+                    lastName,
+                    occupation,
+                    location,
+                    userPicturePath: photos?.[0]
+                }
             }
         );
 
@@ -49,7 +56,7 @@ const getUserFriends = async (req, res) => {
             message: "Friends fetched successfully",
             data: formattedFriends
         });
-    }catch(error){
+    } catch (error) {
         return res.json({
             success: false,
             message: `Error fetching friends: ${error.message}`,
@@ -59,7 +66,7 @@ const getUserFriends = async (req, res) => {
 }
 
 const addRemoveFriends = async (req, res) => {
-    try{
+    try {
         const { id, friendId } = req.params;
         const user = await User.findById(id);
         const friend = await User.findById(friendId);
@@ -73,7 +80,7 @@ const addRemoveFriends = async (req, res) => {
             await User.findByIdAndUpdate(id, { $push: { friends: friendId } });
             await User.findByIdAndUpdate(friendId, { $push: { friends: id } });
         }
-        
+
 
         const updatedUser = await User.findById(id).populate("friends");
 
@@ -88,8 +95,8 @@ const addRemoveFriends = async (req, res) => {
             message: "Friend added/removed successfully",
             data: formattedFriends
         });
-        
-    }catch(error){
+
+    } catch (error) {
         return res.json({
             success: false,
             message: `Error adding/removing friend: ${error.message}`,

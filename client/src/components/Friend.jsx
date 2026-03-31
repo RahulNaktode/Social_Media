@@ -25,8 +25,11 @@ function Friend({ friendId, name, subtitle, userPicturePath }) {
                 { headers: { Authorization: `Bearer ${getUserJwtToken()}` } }
             );
             console.log("Friend update response:", response.data);
-            // Aapka data [{}, {}] aa raha hai, isliye direct set karein
-            setFriendsList(response.data.data); 
+
+            setFriendsList(response.data.data);
+            setTimeout(() => {
+                window.location.reload();
+            }, 100); 
         } catch (err) {
             console.error("Error updating friend:", err);
         }
@@ -39,9 +42,7 @@ function Friend({ friendId, name, subtitle, userPicturePath }) {
                 const res = await axios.get(`http://localhost:8080/user/${userId}`, {
                     headers: { Authorization: `Bearer ${getUserJwtToken()}` }
                 });
-                
-                // getUser mein data: { friends: [...] } aa raha hai
-                // Isliye yahan .friends nikalna zaroori hai
+
                 setFriendsList(res.data.data?.friends || []);
             } catch (err) {
                 console.error("Error fetching user:", err);
@@ -70,8 +71,6 @@ function Friend({ friendId, name, subtitle, userPicturePath }) {
                 onClick={patchFriend} 
                 className={`p-2 rounded-full transition-all ${isFriend ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'}`}
             >
-                {/* Agar dost HAI (isFriend=true), toh MINUS dikhao (Hataane ke liye) */}
-                {/* Agar dost NAHI HAI (isFriend=false), toh PLUS dikhao (Jodne ke liye) */}
                 {isFriend ? <UserMinus size={22} /> : <UserPlus size={22} />}
             </button>
         </div>
