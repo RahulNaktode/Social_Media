@@ -5,6 +5,7 @@ import themeSettings from './components/Theme';
 import Home from './view/Home.jsx';
 import Login from './view/Login.jsx';
 import Signup from './view/Signup.jsx';
+import ProfilePage from './view/ProfilePage.jsx';
 import ColorModeContext from './context/ColorModeContext';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
             <Route path='/home' element={<Home />} />
             <Route path='/' element={<Login />} />
             <Route path='/register' element={<Signup />} />
+            <Route path='/profile/:userId' element={<ProfilePage />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

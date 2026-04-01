@@ -141,7 +141,7 @@ function GetWidget() {
     }
 
     return (
-        <div className='border border-gray-300 shadow p-3 w-160 mt-5 rounded mx-2'>
+        <div className='border border-gray-300 shadow p-3 w-150 mt-5 rounded mx-2'>
             <div className='flex items-center gap-5'>
                 <img src={photos[0]} alt="Profile" className='w-12 h-12 rounded-full object-cover ' />
                 <div className='ml-2'>
@@ -167,7 +167,7 @@ function GetWidget() {
                 />
             </div>
 
-            <div className='flex items-center gap-5 mt-3 text-gray-400'>
+            <div className='flex items-center gap-14 mt-3 text-gray-400'>
                 <div className='flex items-center gap-2 cursor-pointer'><ImagePlus />Image</div>
                 <div className='flex items-center gap-2 cursor-pointer'><Clapperboard />Clip</div>
                 <div className='flex items-center gap-2 cursor-pointer'><Paperclip />Attachment</div>

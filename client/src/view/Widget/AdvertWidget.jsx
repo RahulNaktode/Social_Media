@@ -3,7 +3,7 @@ import AdvertImg from "../../assets/advert.png"
 
 function AdvertWidget() {
   return (
-    <div className='border border-gray-300 shadow px-5 py-6 w-100 mt-5 rounded'>
+    <div className='border border-gray-300 shadow px-5 py-6 w-80 mt-5 rounded'>
       <h1 className='text-xl font-bold'>Sponsored</h1>
       <p>Create Ad</p>
 

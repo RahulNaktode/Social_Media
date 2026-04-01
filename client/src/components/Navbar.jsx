@@ -4,11 +4,10 @@ import { Link } from 'react-router';
 import { useTheme } from '@mui/material/styles';
 import ColorModeContext from '../context/ColorModeContext';
 import Button from './Button';
+import { logoutUser } from '../utils';
 
 function Navbar() {
   const [userName, setUsername] = useState({});
-
-  
 
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
@@ -23,7 +22,7 @@ function Navbar() {
       className="py-3 px-5 flex items-center justify-around border-b-2"
       style={{ backgroundColor: background, color: textColor }}
     >
-      <h2 className="text-2xl text-blue-400 font-bold">SocialInsta</h2>
+      <Link to={`/home`} className="text-2xl text-blue-400 font-bold cursor-pointer">SocialInsta</Link>
 
       <div className="flex items-center border-2 rounded-xl" style={{ borderColor: theme.palette.divider }}>
         <input
@@ -49,15 +48,12 @@ function Navbar() {
         <Bell size={22} />
         <User size={22} />
 
-        {userName?.firstName ? (
-          <div className='flex items-center gap-3 border border-gray-300 rounded-md px-3 shadow'>
-            <span>{userName.firstName}</span>
-            <Button title={"Logout"} variant={"primary"} size={"small"} onClick={() => {}} />
-          </div>
-        ) : (
-          <Link to="/login" style={{ color: textColor }}>
-            Login
-          </Link>
+        {userName ? (
+          <button onClick={() => logoutUser()} style={{ color: textColor }}>
+            Logout
+          </button>
+        ): (
+          <Link to='/'  style={{ color: textColor }}>Login</Link>
         )}
       </div>
     </div>

@@ -29,7 +29,7 @@ function FriendListWidget() {
 
 
   return (
-    <div className='border border-gray-300 shadow px-5 py-6 w-100 mt-5'>
+    <div className='border border-gray-300 shadow px-5 py-6 w-80 mt-5'>
       <h1 className='text-xl font-bold'>Friends List</h1>
       <div className='gap-2'>
         {friends.map((friend) => (

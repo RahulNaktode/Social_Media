@@ -19,7 +19,7 @@ const getUserData = () => {
 const logoutUser = () => {
     localStorage.clear();
     setTimeout(() => {
-        window.location.href = "/login";
+        window.location.href = "/";
     }, 1000);
 };
 

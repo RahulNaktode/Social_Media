@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { getUserJwtToken, getUserData } from './../utils.jsx';
 import axios from 'axios';
 import { UserPlus, UserMinus } from 'lucide-react';
@@ -6,13 +7,11 @@ import { UserPlus, UserMinus } from 'lucide-react';
 function Friend({ friendId, name, subtitle, userPicturePath }) {
     const user = getUserData();
     const userId = user?._id;
-    
-    // State ka naam 'friendsList' rakhte hain confusion se bachne ke liye
+    const navigation = useNavigate();
+
     const [friendsList, setFriendsList] = useState([]);
 
-    // Logic Fix: Direct array par .some() chalayenge
     const isFriend = friendsList?.some((f) => {
-        // Agar array mein objects hain toh f._id, warna direct f
         const compareId = typeof f === 'object' ? f._id : f;
         return String(compareId) === String(friendId);
     });
@@ -53,7 +52,9 @@ function Friend({ friendId, name, subtitle, userPicturePath }) {
 
     return (
         <div className='flex items-center justify-between p-2'>
-            <div className='flex gap-3 items-center'>
+            <div className='flex gap-3 items-center cursor-pointer'
+                onClick={() => navigation(`/profile/${friendId}`)}
+            >
                 {userPicturePath && (
                     <img 
                         src={userPicturePath} 
@@ -69,7 +70,7 @@ function Friend({ friendId, name, subtitle, userPicturePath }) {
 
             <button 
                 onClick={patchFriend} 
-                className={`p-2 rounded-full transition-all ${isFriend ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'}`}
+                className={`p-2 rounded-full transition-all cursor-pointer ${isFriend ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'}`}
             >
                 {isFriend ? <UserMinus size={22} /> : <UserPlus size={22} />}
             </button>

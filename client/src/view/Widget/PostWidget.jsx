@@ -31,7 +31,7 @@ function PostWidget({ postId, postUserId, name, description, location, picturePa
 
 
   return (
-    <div className='border border-gray-300 shadow px-5 py-6 w-160 mt-5'>
+    <div className='border border-gray-300 shadow px-5 py-6 w-150 mt-5 rounded'>
       <div>
         <Friend
           friendId={postUserId}

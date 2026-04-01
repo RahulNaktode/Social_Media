@@ -21,7 +21,7 @@ function PostsWidget({ isProfile = false }) {
     }
 
     const getUserPosts = async () => {
-        const response = await axios.get(`http://localhost:8080/posts/${userId}/posts`, {
+        const response = await axios.get(`http://localhost:8080/post/${userId}/posts`, {
             headers: {
                 Authorization: `Bearer ${getUserJwtToken()}`
             }

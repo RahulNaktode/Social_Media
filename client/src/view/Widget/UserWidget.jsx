@@ -4,6 +4,7 @@ import axios from 'axios';
 import { MapPin, BriefcaseBusiness } from 'lucide-react';
 import LinkedinImg from './../../assets/linkedin.png';
 import TwitterImg from '../../assets/twitter.png';
+import ProfilePage from '../ProfilePage.jsx';
 
 function Widget() {
     const [userData, setUserData] = useState(null);
@@ -39,7 +40,7 @@ function Widget() {
     
   return (
     <div className='border border-gray-300 shadow p-3 w-80 mt-5 rounded'>
-      <div className='flex items-center border-b-2 border-gray-300 pb-3'>
+      <div className='flex items-center border-b-2 border-gray-300 pb-3 cursor-pointer'>
           <div>
          <img src={photos[0]} alt="Profile" className='w-14 h-14 rounded-full object-cover mb-2' />
          </div>
@@ -68,11 +69,11 @@ function Widget() {
       </div>
 
       <div>
-        <p className=' font-bold mb-2'>Social Profiles</p>
-        <p className='flex'>
+        <p className=' font-bold my-2'>Social Profiles</p>
+        <p className='flex items-center gap-2 text-sm mb-2'>
           <img src={LinkedinImg} alt="LinkedIn" className='w-7 h-7 mb-2' />Linkedin
         </p>
-        <p className='flex'>
+        <p className='flex items-center gap-2 text-sm mb-2'>
           <img src={TwitterImg} alt="Twitter" className='w-7 h-7' />Twitter
         </p>
       </div>
