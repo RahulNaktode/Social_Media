@@ -5,6 +5,7 @@ import HeartImg from './../../assets/heart.png';
 import DisHeartImg from '../../assets/disheart.png';
 import { MessageSquareText, Share2 } from 'lucide-react';
 import { useState } from 'react';
+import PhotoViwer from '../../components/PhotoViwer.jsx';
 
 function PostWidget({ postId, postUserId, name, description, location, picturePath, userPicturePath, likes, comments }) {
 
@@ -42,7 +43,7 @@ function PostWidget({ postId, postUserId, name, description, location, picturePa
         <p className='text-gray-500 mt-4 mx-3'>{description}</p>
         <div className='flex items-center gap-2'>
           {picturePath &&
-            (<img src={picturePath} alt="Post" className=' h-full rounded mt-2 mx-2' />)
+            (<PhotoViwer imageUrl={picturePath} />)
           }
         </div>
         <div className='flex items-center justify-between gap-4 mt-5'>

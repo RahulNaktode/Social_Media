@@ -5,7 +5,7 @@ import connectDB from "./db.js";
 import checkJWT from "./middlewars/jwt.js";
 import { getHome, getHealth } from "./controllers/health.js";
 import { postRegister, postLogin } from "./controllers/auth.js";
-import { getUser, getUserFriends, addRemoveFriends } from "./controllers/users.js";
+import { getUser, getUserFriends, addRemoveFriends, updateUser } from "./controllers/users.js";
 import { createPost, getFeedPosts, getUserPosts, likePost } from "./controllers/posts.js";
 import ImageKit from "@imagekit/nodejs";
 
@@ -38,6 +38,7 @@ app.post("/login", postLogin);
 app.get("/user/:id", checkJWT, getUser);
 app.get("/user/:id/friends", checkJWT, getUserFriends);
 app.patch("/user/:id/:friendId", checkJWT, addRemoveFriends);
+app.put("/user/:userId", checkJWT, updateUser);
 
 app.post("/posts", checkJWT, createPost);
 app.get("/posts", checkJWT, getFeedPosts);

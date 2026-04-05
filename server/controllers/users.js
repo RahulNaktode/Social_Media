@@ -65,6 +65,48 @@ const getUserFriends = async (req, res) => {
     };
 }
 
+const updateUser = async (req, res) => {
+  try {
+
+    const userId = req.user?.id;
+
+    if (!userId) {
+      return res.json({
+        success: false,
+        message: "Unauthorized"
+      });
+    }
+
+    const { firstName, lastName, email, photos, location, occupation } = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { firstName, lastName, email, photos, location, occupation },
+      { new: true, runValidators: true }
+    ).select("-password");
+
+    if (!updatedUser) {
+      return res.json({
+        success: false,
+        message: "User not found"
+      });
+    }
+
+    return res.json({
+      success: true,
+      message: "Profile updated successfully",
+      data: updatedUser
+    });
+
+  } catch (error) {
+    return res.json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+
 const addRemoveFriends = async (req, res) => {
     try {
         const { id, friendId } = req.params;
@@ -106,4 +148,4 @@ const addRemoveFriends = async (req, res) => {
 
 }
 
-export { getUser, getUserFriends, addRemoveFriends }
+export { getUser, getUserFriends, addRemoveFriends, updateUser };
