@@ -5,7 +5,7 @@ import { MapPin, BriefcaseBusiness, UserPen } from 'lucide-react';
 import LinkedinImg from './../../assets/linkedin.png';
 import TwitterImg from '../../assets/twitter.png';
 import ProfilePage from '../ProfilePage.jsx';
-import { useNavigate } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 
 function Widget() {
   const [userData, setUserData] = useState(null);
@@ -76,12 +76,12 @@ function Widget() {
 
       <div>
         <p className=' font-bold my-2'>Social Profiles</p>
-        <p className='flex items-center gap-2 text-sm mb-2'>
+        <Link to='https://www.linkedin.com/' className='flex items-center gap-2 text-sm mb-2'>
           <img src={LinkedinImg} alt="LinkedIn" className='w-7 h-7 mb-2' />Linkedin
-        </p>
-        <p className='flex items-center gap-2 text-sm mb-2'>
+        </Link>
+        <Link to='https://x.com/' className='flex items-center gap-2 text-sm mb-2'>
           <img src={TwitterImg} alt="Twitter" className='w-7 h-7' />Twitter
-        </p>
+        </Link>
       </div>
 
     </div>

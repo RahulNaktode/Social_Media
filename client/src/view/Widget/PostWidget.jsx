@@ -32,56 +32,58 @@ function PostWidget({ postId, postUserId, name, description, location, picturePa
 
 
   return (
-    <div className='border border-gray-300 shadow px-5 py-6 w-150 mt-5 rounded'>
-      <div>
-        <Friend
-          friendId={postUserId}
-          name={name}
-          subtitle={location}
-          userPicturePath={userPicturePath}
-        />
-        <p className='text-gray-500 mt-4 mx-3'>{description}</p>
-        <div className='flex items-center gap-2'>
-          {picturePath &&
-            (<PhotoViwer imageUrl={picturePath} />)
-          }
+    <div className='border border-gray-300 shadow px-5 py-6 w-full max-w-150 mt-5 rounded'>
+      <Friend
+        friendId={postUserId}
+        name={name}
+        subtitle={location}
+        userPicturePath={userPicturePath}
+      />
+      
+      <p className='text-gray-500 mt-4 mx-3'>{description}</p>
+      
+      {picturePath && (
+        <div className='mt-4'>
+          <PhotoViwer imageUrl={picturePath} />
         </div>
-        <div className='flex items-center justify-between gap-4 mt-5'>
-          <div className='flex items-center gap-3'>
-            <div className='flex items-center gap-1'>
-              {isLiked ? (
-                <div>
-                  <img src={HeartImg} alt="Liked" onClick={patchLike} className='cursor-pointer w-6 h-6' />
-                </div>
-              ) : (
-                <div>
-                  <img src={DisHeartImg} alt="Not Liked" onClick={patchLike} className='cursor-pointer w-6 h-6' />
-                </div>
-              )}
-              <span>{likesCount} {likesCount === 1 ? "like" : "likes"}</span>
-            </div>
+      )}
 
-            <div className='flex items-center gap-1 cursor-pointer' >
-
-              <MessageSquareText onClick={() => setIsComments(!isComments)} /><span>{comments.length}</span>
-              <div>
-                {isComments && (
-                  <div className='mt-3'>
-                    {comments.map((comment, index) => (
-                      <div key={`${name}-${index}`} className='mb-2'>
-                        <p className='text-gray-700'>{comment}</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
+      <div className='flex items-center justify-between mt-5'>
+        <div className='flex items-center gap-4'>
+          
+          <div className='flex items-center gap-1'>
+            <img 
+              src={isLiked ? HeartImg : DisHeartImg} 
+              alt="like icon" 
+              onClick={patchLike} 
+              className='cursor-pointer w-6 h-6 hover:scale-110 transition-transform' 
+            />
+            <span className='text-sm font-medium'>{likesCount}</span>
           </div>
-          <div>
-            <Share2 />
+
+          <div 
+            className='flex items-center gap-1 cursor-pointer hover:opacity-70' 
+            onClick={() => setIsComments(!isComments)}
+          >
+            <MessageSquareText size={22} />
+            <span className='text-sm font-medium'>{comments.length}</span>
           </div>
         </div>
+
+        <Share2 className='cursor-pointer hover:opacity-70' size={20} />
       </div>
+
+      {isComments && (
+        <div className='mt-4 border-t pt-3'>
+          {comments.map((comment, index) => (
+            <div key={`${postId}-comment-${index}`} className='mb-2 last:mb-0'>
+              <p className='text-gray-700 text-sm bg-gray-50 p-2 rounded'>
+                {comment}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Trash2, X } from 'lucide-react';
 
 function PhotoPreview({ imageUrl, show, onClose }) {
-  // Close on Escape key press
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === 'Escape') onClose();
@@ -16,7 +15,7 @@ function PhotoPreview({ imageUrl, show, onClose }) {
   return (
     <div 
       className='fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 md:p-10 backdrop-blur-sm'
-      onClick={onClose} // Close when clicking the background
+      onClick={onClose}
     >
       <button 
         onClick={onClose} 
@@ -29,7 +28,7 @@ function PhotoPreview({ imageUrl, show, onClose }) {
         src={imageUrl} 
         alt="Preview" 
         className='max-w-full max-h-full rounded-lg shadow-2xl object-contain'
-        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking the image itself
+        onClick={(e) => e.stopPropagation()}
       />
     </div>
   );
