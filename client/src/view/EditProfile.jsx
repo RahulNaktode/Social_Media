@@ -35,7 +35,7 @@ function EditProfile() {
 
     const authenticator = async () => {
         try {
-            const response = await fetch("http://localhost:8080/auth");
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth`);
             if (!response.ok) {
                 const errorText = await response.text();
                 throw new Error(`Request failed with status ${response.status}: ${errorText}`);
@@ -110,7 +110,7 @@ function EditProfile() {
     };
 
     const editUser = async () => {
-        const response = await axios.put(`http://localhost:8080/user/${userId}`, existingUser, {
+        const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/user/${userId}`, existingUser, {
             headers: {
                 Authorization: `Bearer ${getUserJwtToken()}`,
             }
@@ -137,7 +137,7 @@ function EditProfile() {
     }
 
     const loadUserDetails = async () => {
-        const response = await axios.get(`http://localhost:8080/user/${userId}`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/${userId}`, {
             headers: {
                 Authorization: `Bearer ${getUserJwtToken()}`,
             }

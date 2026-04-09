@@ -23,7 +23,7 @@ function GetWidget() {
 
     const fetchUserData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/user/${userId}`, {
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/${userId}`, {
                 headers: {
                     Authorization: `Bearer ${getUserJwtToken()}`
                 }
@@ -38,7 +38,7 @@ function GetWidget() {
 
     const authenticator = async () => {
         try {
-            const response = await fetch("http://localhost:8080/auth");
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth`);
             const data = await response.json();
             return { 
                 signature: data.signature, 
@@ -91,7 +91,7 @@ function GetWidget() {
     const postHandle = async () => {
         if (!posts && !isPhotoUpload) return alert("Kuch likho ya image select karo!");
 
-        await axios.post("http://localhost:8080/posts",
+        await axios.post(`${import.meta.env.VITE_API_BASE_URL}/posts`,
             {
                 userId,
                 description: posts,

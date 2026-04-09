@@ -99,7 +99,7 @@ function Signup() {
   };
 
   const createUser = async () => {
-    const response = await axios.post("http://localhost:8080/register", newUser);
+    const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/register`, newUser);
 
     if (response.data.success) {
       alert("User created successfully!");

@@ -9,7 +9,7 @@ function FriendListWidget() {
 
     const getFriends = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/user/${userId}/friends`, {
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/${userId}/friends`, {
                 headers: { Authorization: `Bearer ${getUserJwtToken()}` },
             });
             console.log("Friends list response:", response.data);

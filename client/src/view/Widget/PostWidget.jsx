@@ -20,7 +20,7 @@ function PostWidget({ postId, postUserId, name, description, location, picturePa
   const likesCount = Object.keys(likesState || {}).length;
 
   const patchLike = async () => {
-    const response = await axios.patch(`http://localhost:8080/posts/${postId}/like`, { userId }, {
+    const response = await axios.patch(`${import.meta.env.VITE_API_BASE_URL}/posts/${postId}/like`, { userId }, {
       headers: {
         Authorization: `Bearer ${getUserJwtToken()}`
       }
@@ -33,7 +33,7 @@ function PostWidget({ postId, postUserId, name, description, location, picturePa
     if (!commentText.trim()) return;
 
     try {
-      const response = await axios.post(`http://localhost:8080/posts/${postId}/comment`, 
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/posts/${postId}/comment`, 
         { userId, comment: commentText }, 
         {
           headers: {

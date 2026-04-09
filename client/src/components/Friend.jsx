@@ -38,7 +38,7 @@ function Friend({ friendId, name, subtitle, userPicturePath }) {
         if (!userId) return;
         const getUser = async () => {
             try {
-                const res = await axios.get(`http://localhost:8080/user/${userId}`, {
+                const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/${userId}`, {
                     headers: { Authorization: `Bearer ${getUserJwtToken()}` }
                 });
 

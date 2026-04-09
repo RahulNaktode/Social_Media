@@ -8,7 +8,7 @@ function PostsWidget({ isProfile = false }) {
     const userId = getUserData()?._id;
     const getPosts = async () => {
         try {
-            const response = await axios.get("http://localhost:8080/posts", {
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/posts`, {
                 headers: {
                     Authorization: `Bearer ${getUserJwtToken()}`
                 }
@@ -21,7 +21,7 @@ function PostsWidget({ isProfile = false }) {
     }
 
     const getUserPosts = async () => {
-        const response = await axios.get(`http://localhost:8080/post/${userId}/posts`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/post/${userId}/posts`, {
             headers: {
                 Authorization: `Bearer ${getUserJwtToken()}`
             }
