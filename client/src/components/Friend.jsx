@@ -19,7 +19,7 @@ function Friend({ friendId, name, subtitle, userPicturePath }) {
     const patchFriend = async () => {
         try {
             const response = await axios.patch(
-                `http://localhost:8080/user/${userId}/${friendId}`,
+                `${import.meta.env.VITE_API_BASE_URL}/user/${userId}/${friendId}`,
                 {}, 
                 { headers: { Authorization: `Bearer ${getUserJwtToken()}` } }
             );
