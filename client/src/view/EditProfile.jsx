@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
-import Input from '../../components/Input.jsx'
-import Button from '../../components/Button.jsx'
-import SubNavbar from '../../components/SubNavbar.jsx'
+import Input from '../components/Input.jsx'
+import Button from '../components/Button.jsx'
+import SubNavbar from '../components/SubNavbar.jsx'
 import { Link } from 'react-router'
 import { useState, useRef } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
@@ -13,7 +13,7 @@ import {
     ImageKitUploadNetworkError,
     upload,
 } from "@imagekit/react";
-import { getUserJwtToken } from '../../utils.jsx';
+import { getUserJwtToken } from '../utils.jsx';
 import { useParams } from 'react-router';
 
 function EditProfile() {

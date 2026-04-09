@@ -12,7 +12,7 @@ function Home() {
   return (
     <div>
       <Navbar />
-      <div className='md:flex md:mx-14 gap-5'>
+      <div className='md:flex md:mx-40 gap-10'>
       <div>
         <UserWidget className=""/>
       </div>

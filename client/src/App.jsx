@@ -7,7 +7,7 @@ import Login from './view/Login.jsx';
 import Signup from './view/Signup.jsx';
 import ProfilePage from './view/ProfilePage.jsx';
 import ColorModeContext from './context/ColorModeContext';
-import EditProfile from './view/Widget/EditProfile.jsx';
+import EditProfile from './view/EditProfile.jsx';
 import MyPostWidget from './view/Widget/MyPostWidget.jsx';
 
 function App() {

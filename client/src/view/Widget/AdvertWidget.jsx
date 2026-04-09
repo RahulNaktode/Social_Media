@@ -12,7 +12,7 @@ function AdvertWidget({ className }) {
       </div>
 
       <div className='mt-3'>
-        <img src={AdvertImg} alt="advert" width={"100%"} height={"auto"} className="rounded-lg" />
+        <img src={AdvertImg} alt="advert" width={"100%"} height={"auto"} className="rounded-lg transition-transform duration-100 hover:scale-105" />
       </div>
 
       <div className='my-2 flex justify-between'>

@@ -44,13 +44,12 @@ function Navbar() {
 
       <div className="flex items-center gap-3 md:gap-6">
         <div onClick={colorMode.toggleColorMode} className="cursor-pointer p-1.5 hover:bg-gray-500/10 rounded-full">
-          {isDarkMode ? <Sun size={20} /> : <MoonStar size={20} />}
+          {isDarkMode ? <Sun size={25} /> : <MoonStar size={25} />}
         </div>
 
         <div className="flex items-center gap-2 md:gap-5">
-            <MessageSquareText size={22} className="cursor-pointer hidden sm:block" />
-            <Bell size={22} className="cursor-pointer" />
-            <User size={22} className="cursor-pointer hidden sm:block" />
+            <Bell size={25} className="cursor-pointer" />
+            <User size={25} className="cursor-pointer hidden sm:block" />
         </div>
 
         {userName ? (
