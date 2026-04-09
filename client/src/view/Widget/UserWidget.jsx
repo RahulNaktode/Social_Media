@@ -41,28 +41,28 @@ function Widget() {
   const { firstName, lastName, photos, location, occupation, viewedProfile, impressions, friends } = userData;
 
   return (
-    <div className='border border-gray-300 shadow p-3 w-80 mt-5 rounded'>
+    <div className='border border-gray-300 shadow p-3 w-full md:w-80 mt-5 rounded'>
       <div className='flex items-center justify-between border-b-2 border-gray-300 pb-3 cursor-pointer' >
         <div className='flex items-center' onClick={() => navigation(`/profile/${userId}`)}>
         <div>
           <img src={photos[0]} alt="Profile" className='w-14 h-14 rounded-full object-cover mb-2' />
         </div>
         <div className='ml-4'>
-          <h1 className='text-lg font-bold'>{firstName} {lastName}</h1>
+          <h1 className='text-lg font-bold transition-transform duration-100 hover:scale-102'>{firstName} {lastName}</h1>
           <p>{friends.length} friends</p>
         </div>
         </div>
-        <UserPen onClick={() => navigation(`/profile/${userId}/edit`)} />
+        <UserPen onClick={() => navigation(`/profile/${userId}/edit`)} className='hover:scale-110 transition-transform'/>
         
       </div>
 
-      <div className='border-b-2 border-gray-300 py-3'>
+      <div className='border-b-2 border-gray-300 py-3 hidden md:block'>
         <p className='flex items-center gap-2 mb-2'><MapPin size={22} />{location}</p>
 
         <p className='flex items-center gap-2'><BriefcaseBusiness size={22} />{occupation}</p>
       </div>
 
-      <div className='mt-3 border-b-2 border-gray-300'>
+      <div className='mt-3 border-b-2 border-gray-300 hidden md:block pb-3'>
         <div className='flex items-center justify-between mb-2'>
           <p>Who viewed your profile</p>
           <p className='font-bold'>{viewedProfile}</p>

@@ -6,7 +6,7 @@ import checkJWT from "./middlewars/jwt.js";
 import { getHome, getHealth } from "./controllers/health.js";
 import { postRegister, postLogin } from "./controllers/auth.js";
 import { getUser, getUserFriends, addRemoveFriends, updateUser } from "./controllers/users.js";
-import { createPost, getFeedPosts, getUserPosts, likePost } from "./controllers/posts.js";
+import { createPost, getFeedPosts, getUserPosts, likePost, addComment } from "./controllers/posts.js";
 import ImageKit from "@imagekit/nodejs";
 
 dotenv.config();
@@ -44,6 +44,7 @@ app.post("/posts", checkJWT, createPost);
 app.get("/posts", checkJWT, getFeedPosts);
 app.get("/post/:userId/posts", checkJWT, getUserPosts);
 app.patch("/posts/:id/like", checkJWT, likePost);
+app.post("/posts/:id/comment", checkJWT, addComment);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

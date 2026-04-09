@@ -1,9 +1,8 @@
-import React from 'react'
 import { useState, useEffect, useRef } from 'react';
 import { getUserJwtToken, getUserData } from '../../utils.jsx';
 import axios from 'axios';
 import Input from '../../components/Input.jsx';
-import { ImagePlus, Clapperboard, Paperclip, Mic } from 'lucide-react';
+import { ImagePlus, Clapperboard, Paperclip, Mic, X } from 'lucide-react'; // X icon add kiya
 import {
     ImageKitAbortError,
     ImageKitInvalidRequestError,
@@ -20,7 +19,6 @@ function GetWidget() {
     const [progress, setProgress] = useState(0);
     const fileInputRef = useRef();
 
-
     const userId = getUserData()._id;
 
     const fetchUserData = async () => {
@@ -32,8 +30,6 @@ function GetWidget() {
             });
             if (response.data.success) {
                 setUserData(response.data.data);
-            } else {
-                console.error("Failed to fetch user data:", response.data.message);
             }
         } catch (error) {
             console.error("Error fetching user data:", error);
@@ -43,44 +39,28 @@ function GetWidget() {
     const authenticator = async () => {
         try {
             const response = await fetch("http://localhost:8080/auth");
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`Request failed with status ${response.status}: ${errorText}`);
-            }
-
             const data = await response.json();
-            const { signature, expire, token, publicKey } = data;
-            return { signature, expire, token, publicKey };
+            return { 
+                signature: data.signature, 
+                expire: data.expire, 
+                token: data.token, 
+                publicKey: data.publicKey 
+            };
         } catch (error) {
-            console.error("Authentication error:", error);
-            throw new Error("Authentication request failed");
+            console.error("Auth error:", error);
         }
     };
 
     const handleUpload = async () => {
         const fileInput = fileInputRef.current;
-        if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
-            alert("Please select a file to upload");
-            return;
-        }
+        if (!fileInput?.files?.[0]) return;
 
         const file = fileInput.files[0];
-
-        let authParams;
-        try {
-            authParams = await authenticator();
-        } catch (authError) {
-            console.error("Failed to authenticate for upload:", authError);
-            return;
-        }
-        const { signature, expire, token, publicKey } = authParams;
+        const authParams = await authenticator();
 
         try {
             const uploadResponse = await upload({
-                expire,
-                token,
-                signature,
-                publicKey,
+                ...authParams,
                 file,
                 fileName: file.name,
                 onProgress: (event) => {
@@ -91,91 +71,135 @@ function GetWidget() {
             setIsPhotoUpload({
                 url: uploadResponse.url,
                 fileId: uploadResponse.fileId,
-            })
-
-
+            });
             setProgress(0);
-            fileInput.value = "";
         } catch (error) {
-            if (error instanceof ImageKitAbortError) {
-                console.error("Upload aborted:", error.reason);
-            } else if (error instanceof ImageKitInvalidRequestError) {
-                console.error("Invalid request:", error.message);
-            } else if (error instanceof ImageKitUploadNetworkError) {
-                console.error("Network error:", error.message);
-            } else if (error instanceof ImageKitServerError) {
-                console.error("Server error:", error.message);
-            } else {
-                console.error("Upload error:", error);
-            }
+            console.error("Upload error:", error);
+            setProgress(0);
         }
     };
+
+    const removeImage = () => {
+        setIsPhotoUpload(null);
+        if (fileInputRef.current) fileInputRef.current.value = "";
+    };
+
+    const handleIconClick = () => {
+        fileInputRef.current.click();
+    };
+
+    const postHandle = async () => {
+        if (!posts && !isPhotoUpload) return alert("Kuch likho ya image select karo!");
+
+        await axios.post("http://localhost:8080/posts",
+            {
+                userId,
+                description: posts,
+                picturePath: isPhotoUpload ? isPhotoUpload.url : "",
+            },
+            {
+                headers: { Authorization: `Bearer ${getUserJwtToken()}` }
+            });
+
+        setPosts("");
+        setIsPhotoUpload(null);
+    }
 
     useEffect(() => {
         fetchUserData();
     }, []);
 
-    if (!userData) {
-        return null;
-    }
-
-    const { photos } = userData;
-
-    const postHandle = async () => {
-
-        const response = await axios.post("http://localhost:8080/posts",
-            {
-                userId,
-                description: posts,
-                picturePath: isPhotoUpload ? isPhotoUpload.url : [],
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${getUserJwtToken()}`
-                }
-            });
-
-        const post = await response.data;
-        setPosts("");
-        setIsPhotoUpload(null);
-    }
+    if (!userData) return null;
 
     return (
-        <div className='border border-gray-300 shadow p-3 w-150 mt-5 rounded mx-2'>
-            <div className='flex items-center gap-5'>
-                <img src={photos[0]} alt="Profile" className='w-12 h-12 rounded-full object-cover ' />
-                <div className='ml-2'>
+        <div className='border border-gray-300 shadow p-5 w-full max-w-140 mt-5 rounded-xl mx-2'>
+
+            <div className='flex items-center gap-4'>
+                <img 
+                    src={userData.photos[0]} 
+                    alt="Profile" 
+                    className='w-12 h-12 rounded-full object-cover shadow-sm' 
+                />
+                <div className='flex-1'>
                     <Input
                         placeholder="What's on your mind?"
-                        className='w-full ml-3'
+                        className='w-full'
                         value={posts}
                         onChange={(e) => setPosts(e.target.value)}
                     />
                 </div>
-
             </div>
-            <div className=''>
-                <input
-                    type="file"
-                    ref={fileInputRef}
-                    className='border border-gray-300 px-2 py-1 rounded w-full mt-3 text-gray-400'
-                    onChange={(e) => {
-                        if(e.target.files.length > 0){
-                            handleUpload();
-                        }
-                    }}
+
+            <input
+                type="file"
+                ref={fileInputRef}
+                className='hidden' 
+                accept="image/*"
+                onChange={(e) => e.target.files.length > 0 && handleUpload()}
+            />
+
+            {/* Progress Bar */}
+            {progress > 0 && (
+                <div className="w-full bg-gray-100 h-1 mt-3 rounded-full overflow-hidden">
+                    <div className="bg-blue-500 h-full transition-all" style={{ width: `${progress}%` }}></div>
+                </div>
+            )}
+
+            {isPhotoUpload && (
+                <div className='relative mt-4 group'>
+                    <img 
+                        src={isPhotoUpload.url} 
+                        alt="Preview" 
+                        className='w-full h-60 object-cover rounded-lg border border-gray-200' 
+                    />
+                    <button 
+                        onClick={removeImage}
+                        className='absolute top-2 right-2 bg-red-500 text-white rounded-full p-1.5 shadow-lg hover:bg-red-600 transition duration-200'
+                    >
+                        <X size={18} />
+                    </button>
+                </div>
+            )}
+
+            <hr className='my-4 border-gray-100' />
+
+            <div className='flex items-center justify-between'>
+                <div className='flex items-center gap-10 text-gray-500'>
+                    {/* Image trigger icon */}
+                    <div 
+                        className='flex items-center gap-2 cursor-pointer hover:text-blue-500 transition'
+                        onClick={handleIconClick}
+                    >
+                        <ImagePlus size={20} />
+                        <span className='text-sm font-medium'>Image</span>
+                    </div>
+                    
+                    <div className='flex items-center gap-2 cursor-pointer hover:text-blue-500 transition'>
+                        <Clapperboard size={20} />
+                        <span className='text-sm font-medium'>Clip</span>
+                    </div>
+                    
+                    <div className='hidden sm:flex items-center gap-2 cursor-pointer hover:text-blue-500 transition'>
+                        <Paperclip size={20} />
+                        <span className='text-sm font-medium'>Attach</span>
+                    </div>
+
+                    <div className='hidden sm:flex items-center gap-2 cursor-pointer hover:text-blue-500 transition'>
+                        <Mic size={20} />
+                        <span className='text-sm font-medium'>Audio</span>
+                    </div>
+                </div>
+
+                <Button 
+                    title='Post' 
+                    size='small' 
+                    variant='primary' 
+                    onClick={postHandle} 
+                    disabled={!posts && !isPhotoUpload} // Khali post disable karein
                 />
             </div>
-
-            <div className='flex items-center gap-14 mt-3 text-gray-400'>
-                <div className='flex items-center gap-2 cursor-pointer'><ImagePlus />Image</div>
-                <div className='flex items-center gap-2 cursor-pointer'><Clapperboard />Clip</div>
-                <div className='flex items-center gap-2 cursor-pointer'><Paperclip />Attachment</div>
-                <div className='flex items-center gap-2 cursor-pointer'><Mic />Audio</div>
-                <Button title='Post' size='small' variant='primary' onClick={postHandle} />
-            </div>
         </div>
-    )
+    );
 }
 
-export default GetWidget
+export default GetWidget;

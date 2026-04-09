@@ -47,7 +47,7 @@ function Login() {
     return (
         <div>
             <SubNavbar />
-            <div className='border border-gray-300 shadow rounded w-110 p-6 mx-auto mt-10'>
+            <div className='border border-gray-300 shadow rounded w-full mx-1 md:w-110 p-6 md:mx-auto mt-10'>
                 <h1 className='text-xl font-bold mb-6 text-center'>Login your Account</h1>
                 
                 <Input 

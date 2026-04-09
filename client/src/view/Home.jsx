@@ -12,16 +12,16 @@ function Home() {
   return (
     <div>
       <Navbar />
-      <div className='flex mx-14 gap-5'>
+      <div className='md:flex md:mx-14 gap-5'>
       <div>
-        <UserWidget />
+        <UserWidget className=""/>
       </div>
       <div>
         <MyPostWidget />
         <PostsWidget />
       </div>
       <div>
-        <AdvertWidget />
+        <AdvertWidget className="hidden md:block"/>
         <FriendListWidget/>
       </div>
       </div>

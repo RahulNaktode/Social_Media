@@ -11,7 +11,7 @@ function ProfilePage() {
   return (
     <div>
       <Navbar />
-      <div className='flex justify-center gap-5'>
+      <div className='flex md:flex flex-col justify-center gap-5'>
         <div className='flex flex-col mx-5 gap-5'>
         <UserWidget />
         <FriendListWidget />

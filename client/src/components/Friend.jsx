@@ -52,25 +52,25 @@ function Friend({ friendId, name, subtitle, userPicturePath }) {
 
     return (
         <div className='flex items-center justify-between p-2'>
-            <div className='flex gap-3 items-center cursor-pointer'
+            <div className='flex gap-3 items-center cursor-pointer '
                 onClick={() => navigation(`/profile/${friendId}`)}
             >
                 {userPicturePath && (
                     <img 
                         src={userPicturePath} 
                         alt="user" 
-                        className="w-10 h-10 rounded-full object-cover" 
+                        className="w-10 h-10 rounded-full object-cover hover:scale-110 transition-transform" 
                     />
                 )}
                 <div>
-                    <div className='font-bold text-lg'>{name}</div>
+                    <div className='font-bold text-lg hover:scale-110 transition-transform'>{name}</div>
                     <div className='text-gray-500 text-sm'>{subtitle}</div>
                 </div>
             </div>
 
             <button 
                 onClick={patchFriend} 
-                className={`p-2 rounded-full transition-all cursor-pointer ${isFriend ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'}`}
+                className={`p-2 rounded-full hover:scale-110 transition-transform cursor-pointer ${isFriend ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'}`}
             >
                 {isFriend ? <UserMinus size={22} /> : <UserPlus size={22} />}
             </button>

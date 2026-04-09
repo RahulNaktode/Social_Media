@@ -121,4 +121,29 @@ const likePost = async (req, res) => {
     }
 };
 
-export { createPost, getFeedPosts, getUserPosts, likePost }
+const addComment = async (req, res) => {
+  try {
+    const { id } = req.params; // Post ID URL se milegi
+    const { comment } = req.body; // Comment text body se milega
+
+    // Post dhund kar uske comments array mein naya comment add karein
+    const updatedPost = await Post.findByIdAndUpdate(
+      id,
+      { $push: { comments: comment } }, // MongoDB $push operator ka use karein
+      { new: true } // Taaki update hone ke baad naya data return ho
+    );
+
+    if (!updatedPost) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    res.status(200).json({ 
+        message: "Comment added successfully", 
+        data: updatedPost 
+    });
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
+};
+
+export { createPost, getFeedPosts, getUserPosts, likePost, addComment }

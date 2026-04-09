@@ -1,22 +1,26 @@
 import React from 'react'
 import AdvertImg from "../../assets/advert.png"
 
-function AdvertWidget() {
+// className prop add kara
+function AdvertWidget({ className }) {
   return (
-    <div className='border border-gray-300 shadow px-5 py-6 w-80 mt-5 rounded'>
+    // yethe `${className}` vapara
+    <div className={`border border-gray-300 shadow px-5 py-6 w-80 mt-5 rounded ${className}`}>
       <h1 className='text-xl font-bold'>Sponsored</h1>
-      <p>Create Ad</p>
-
-      <div>
-        <img src={AdvertImg} alt="advert" width={"100%"} height={"auto"} />
+      <div className='flex justify-between items-center'>
+         <p>Create Ad</p>
       </div>
 
-      <div className='my-2'>
-        <p >MikeCosmetice</p>
-        <p>mikecosmetice.com</p>
+      <div className='mt-3'>
+        <img src={AdvertImg} alt="advert" width={"100%"} height={"auto"} className="rounded-lg" />
       </div>
 
-      <div className='mt-2 text-gray-500'>
+      <div className='my-2 flex justify-between'>
+        <p className='font-medium'>MikeCosmetice</p>
+        <p className='text-sm text-gray-500'>mikecosmetice.com</p>
+      </div>
+
+      <div className='mt-2 text-gray-500 text-sm'>
         <p>Ad description goes here. This is a placeholder for the actual ad content.</p>
       </div>
     </div>
