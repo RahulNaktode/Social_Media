@@ -21,7 +21,7 @@ function Navbar() {
       style={{ backgroundColor: background, color: textColor }}
     >
       <Link to={`/home`} className="text-xl md:text-2xl text-blue-400 font-bold cursor-pointer shrink-0">
-        SocialInsta
+        SocialMediaGram
       </Link>
 
       <div 
