@@ -20,7 +20,7 @@ function Friend({ friendId, name, subtitle, userPicturePath }) {
         try {
             const response = await axios.patch(
                 `${import.meta.env.VITE_API_BASE_URL}/user/${userId}/${friendId}`,
-                {}, 
+                {},
                 { headers: { Authorization: `Bearer ${getUserJwtToken()}` } }
             );
             console.log("Friend update response:", response.data);
@@ -28,7 +28,7 @@ function Friend({ friendId, name, subtitle, userPicturePath }) {
             setFriendsList(response.data.data);
             setTimeout(() => {
                 window.location.reload();
-            }, 100); 
+            }, 100);
         } catch (err) {
             console.error("Error updating friend:", err);
         }
@@ -56,10 +56,10 @@ function Friend({ friendId, name, subtitle, userPicturePath }) {
                 onClick={() => navigation(`/profile/${friendId}`)}
             >
                 {userPicturePath && (
-                    <img 
-                        src={userPicturePath} 
-                        alt="user" 
-                        className="w-10 h-10 rounded-full object-cover hover:scale-110 transition-transform" 
+                    <img
+                        src={userPicturePath}
+                        alt="user"
+                        className="w-10 h-10 rounded-full object-cover hover:scale-110 transition-transform"
                     />
                 )}
                 <div>
@@ -68,8 +68,8 @@ function Friend({ friendId, name, subtitle, userPicturePath }) {
                 </div>
             </div>
 
-            <button 
-                onClick={patchFriend} 
+            <button
+                onClick={patchFriend}
                 className={`p-2 rounded-full hover:scale-110 transition-transform cursor-pointer ${isFriend ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'}`}
             >
                 {isFriend ? <UserMinus size={22} /> : <UserPlus size={22} />}

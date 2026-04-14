@@ -20,7 +20,6 @@ function ProfilePage() {
           <MyPostWidget />
           <PostsWidget isProfile />
         </div>
-
       </div>
     </div>
   )

@@ -24,26 +24,26 @@ function FriendListWidget() {
     }
 
     useEffect(() => {
-        getFriends();                  
+        getFriends();
     }, []);
 
 
-  return (
-    <div className='border border-gray-300 shadow px-5 py-6 w-80 mt-5'>
-      <h1 className='text-xl font-bold'>Friends List</h1>
-      <div className='gap-2'>
-        {friends.map((friend) => (
-            <Friend 
-            key={friend._id}
-            friendId={friend._id}
-            name={`${friend.firstName} ${friend.lastName}`}
-            subtitle={friend.occupation}
-            userPicturePath={friend.userPicturePath}
-            />
-        ))}
-      </div>
-    </div>
-  )
+    return (
+        <div className='border border-gray-300 shadow px-5 py-6 w-80 mt-5'>
+            <h1 className='text-xl font-bold'>Friends List</h1>
+            <div className='gap-2'>
+                {friends.map((friend) => (
+                    <Friend
+                        key={friend._id}
+                        friendId={friend._id}
+                        name={`${friend.firstName} ${friend.lastName}`}
+                        subtitle={friend.occupation}
+                        userPicturePath={friend.userPicturePath}
+                    />
+                ))}
+            </div>
+        </div>
+    )
 }
 
 export default FriendListWidget

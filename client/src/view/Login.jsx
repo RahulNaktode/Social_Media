@@ -25,7 +25,7 @@ function Login() {
 
             if (response.data.success) {
                 toast.success(response.data.message);
-                
+
                 const { jwtToken, data } = response.data;
                 localStorage.setItem("userJwtToken", jwtToken);
                 localStorage.setItem("userData", JSON.stringify(data));
@@ -49,29 +49,29 @@ function Login() {
             <SubNavbar />
             <div className='border border-gray-300 shadow rounded w-full mx-1 md:w-110 p-6 md:mx-auto mt-10'>
                 <h1 className='text-xl font-bold mb-6 text-center'>Login your Account</h1>
-                
-                <Input 
+
+                <Input
                     type="email"
-                    placeholder="Email" 
+                    placeholder="Email"
                     value={loggedinUser.email}
-                    onChange={(e) => setLoggedinUser({...loggedinUser, email: e.target.value})}
-                />
-                
-                <Input 
-                    type="password"
-                    placeholder="Password" 
-                    value={loggedinUser.password}
-                    onChange={(e) => setLoggedinUser({...loggedinUser, password: e.target.value})}
+                    onChange={(e) => setLoggedinUser({ ...loggedinUser, email: e.target.value })}
                 />
 
-                <Button 
-                    title={loading ? "Logging in..." : "Login"} 
-                    variant="primary" 
-                    size="medium" 
-                    onClick={checkUserLogin} 
+                <Input
+                    type="password"
+                    placeholder="Password"
+                    value={loggedinUser.password}
+                    onChange={(e) => setLoggedinUser({ ...loggedinUser, password: e.target.value })}
+                />
+
+                <Button
+                    title={loading ? "Logging in..." : "Login"}
+                    variant="primary"
+                    size="medium"
+                    onClick={checkUserLogin}
                     disabled={loading}
                 />
-                
+
                 <p className='mt-4'>
                     <Link to="/register" className='text-blue-500 hover:text-blue-700 text-sm'>
                         Don't have an account? Register here

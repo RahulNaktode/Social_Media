@@ -82,14 +82,14 @@ function EditProfile() {
             });
 
             setExistingUser((prev) => {
-             const updatedData = {
-          ...prev,
-          photos: [uploadResponse.url]
-        };
-        localStorage.setItem("userData", JSON.stringify(updatedData));
+                const updatedData = {
+                    ...prev,
+                    photos: [uploadResponse.url]
+                };
+                localStorage.setItem("userData", JSON.stringify(updatedData));
 
-        return updatedData;
-     })
+                return updatedData;
+            })
 
 
             setProgress(0)

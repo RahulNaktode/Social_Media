@@ -13,7 +13,7 @@ function PostWidget({ postId, postUserId, name, description, location, picturePa
   const [isComments, setIsComments] = useState(false);
   const [commentText, setCommentText] = useState("");
   const [currentComments, setCurrentComments] = useState(comments || []);
-  const  userId  = getUserData()._id;
+  const userId = getUserData()._id;
 
   const [likesState, setLikesState] = useState(likes || {});
   const isLiked = Boolean(likesState?.[userId]);
@@ -33,8 +33,8 @@ function PostWidget({ postId, postUserId, name, description, location, picturePa
     if (!commentText.trim()) return;
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/posts/${postId}/comment`, 
-        { userId, comment: commentText }, 
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/posts/${postId}/comment`,
+        { userId, comment: commentText },
         {
           headers: {
             Authorization: `Bearer ${getUserJwtToken()}`
@@ -49,24 +49,24 @@ function PostWidget({ postId, postUserId, name, description, location, picturePa
   }
 
   const handleShare = async () => {
-  const shareData = {
-    title: `Post by ${name}`,
-    text: description,
-    url: window.location.href,
-  };
+    const shareData = {
+      title: `Post by ${name}`,
+      text: description,
+      url: window.location.href,
+    };
 
-  try {
-    if (navigator.share) {
-      await navigator.share(shareData);
-      console.log("Shared successfully!");
-    } else {
-      await navigator.clipboard.writeText(window.location.href);
-      alert("Link copied to clipboard! Share it anywhere.");
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+        console.log("Shared successfully!");
+      } else {
+        await navigator.clipboard.writeText(window.location.href);
+        alert("Link copied to clipboard! Share it anywhere.");
+      }
+    } catch (err) {
+      console.error("Error sharing:", err);
     }
-  } catch (err) {
-    console.error("Error sharing:", err);
-  }
-};
+  };
 
   return (
     <div className='border border-gray-300 shadow px-5 py-6 w-full max-w-140 mt-5 rounded '>
@@ -76,9 +76,9 @@ function PostWidget({ postId, postUserId, name, description, location, picturePa
         subtitle={location}
         userPicturePath={userPicturePath}
       />
-      
+
       <p className='text-gray-500 mt-4 mx-3'>{description}</p>
-      
+
       {picturePath && (
         <div className='mt-4'>
           <PhotoViwer imageUrl={picturePath} />
@@ -87,17 +87,17 @@ function PostWidget({ postId, postUserId, name, description, location, picturePa
 
       <div className='flex items-center justify-between mt-5'>
         <div className='flex items-center gap-4'>
-          
+
           {/* Like Section */}
           <div className='flex items-center gap-1'>
             {isLiked ? (
-              <FavoriteOutlined 
+              <FavoriteOutlined
                 size={22}
                 className='text-red-500 cursor-pointer hover:scale-110 transition-transform'
                 onClick={patchLike}
               />
             ) : (
-              <FavoriteBorderOutlined 
+              <FavoriteBorderOutlined
                 size={22}
                 className='cursor-pointer hover:scale-110 transition-transform'
                 onClick={patchLike}
@@ -108,51 +108,51 @@ function PostWidget({ postId, postUserId, name, description, location, picturePa
           </div>
 
           {/* Comment Icon (Toggle) */}
-          <div 
-            className='flex items-center gap-1 cursor-pointer hover:opacity-70' 
+          <div
+            className='flex items-center gap-1 cursor-pointer hover:opacity-70'
             onClick={() => setIsComments(!isComments)}
           >
-            <MessageSquareText size={22} className='hover:scale-110 transition-transform'/>
+            <MessageSquareText size={22} className='hover:scale-110 transition-transform' />
             <span className='text-sm font-medium'>{currentComments.length}</span>
           </div>
         </div>
 
-        <div 
-  className='flex items-center gap-1 cursor-pointer hover:bg-gray-100 p-2 rounded-full transition'
-  onClick={handleShare}
->
-  <Share2 size={20} className='opacity-70 hover:scale-110 transition-transform' />
-  <span className='text-xs font-medium'>Share</span>
-</div>
+        <div
+          className='flex items-center gap-1 cursor-pointer hover:bg-gray-100 p-2 rounded-full transition'
+          onClick={handleShare}
+        >
+          <Share2 size={20} className='opacity-70 hover:scale-110 transition-transform' />
+          <span className='text-xs font-medium'>Share</span>
+        </div>
       </div>
 
       {isComments && (
         <div className='mt-4 border-t pt-3'>
-          
+
           <div className='flex gap-2 mb-4'>
-            <input 
-                type="text" 
-                placeholder="Add a comment..."
-                value={commentText}
-                onChange={(e) => setCommentText(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handlePostComment()} // Enter press karne par post ho jaye
-                className='flex-1 border border-gray-200 rounded-full px-4 py-1 text-sm outline-none focus:border-blue-400 bg-gray-50'
+            <input
+              type="text"
+              placeholder="Add a comment..."
+              value={commentText}
+              onChange={(e) => setCommentText(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handlePostComment()} // Enter press karne par post ho jaye
+              className='flex-1 border border-gray-200 rounded-full px-4 py-1 text-sm outline-none focus:border-blue-400 bg-gray-50'
             />
-            <button 
-                onClick={handlePostComment}
-                className='text-blue-500 font-semibold text-sm hover:text-blue-700'
+            <button
+              onClick={handlePostComment}
+              className='text-blue-500 font-semibold text-sm hover:text-blue-700'
             >
-                Post
+              Post
             </button>
           </div>
 
           <div className='max-h-52 overflow-y-auto space-y-2'>
             {currentComments.map((comment, index) => (
-                <div key={`${postId}-comment-${index}`} className='bg-gray-50 p-2 rounded-lg'>
-                  <p className='text-gray-700 text-sm'>
-                    {comment}
-                  </p>
-                </div>
+              <div key={`${postId}-comment-${index}`} className='bg-gray-50 p-2 rounded-lg'>
+                <p className='text-gray-700 text-sm'>
+                  {comment}
+                </p>
+              </div>
             ))}
           </div>
         </div>

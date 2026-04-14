@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Button({title, size, variant, onClick}) {
+function Button({ title, size, variant, onClick }) {
     const SIZE_CLASSES = {
         small: 'px-3 py-1 text-sm',
         medium: 'px-5 py-1 text-lg',
@@ -14,16 +14,16 @@ function Button({title, size, variant, onClick}) {
         danger: 'bg-red-500 text-white hover:bg-red-600',
     }
 
-  return (
-    <div>
-        <button 
-        className={`${SIZE_CLASSES[size]} ${VARIANT_CLASSES[variant]} cursor-pointer rounded-md my-3`} 
-        onClick={onClick}>
-            {title}
-        </button>
-      
-    </div>
-  )
+    return (
+        <div>
+            <button
+                className={`${SIZE_CLASSES[size]} ${VARIANT_CLASSES[variant]} cursor-pointer rounded-md my-3`}
+                onClick={onClick}>
+                {title}
+            </button>
+
+        </div>
+    )
 }
 
 export default Button

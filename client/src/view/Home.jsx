@@ -13,17 +13,17 @@ function Home() {
     <div>
       <Navbar />
       <div className='md:flex md:mx-40 gap-10'>
-      <div>
-        <UserWidget className=""/>
-      </div>
-      <div>
-        <MyPostWidget />
-        <PostsWidget />
-      </div>
-      <div>
-        <AdvertWidget className="hidden md:block"/>
-        <FriendListWidget/>
-      </div>
+        <div>
+          <UserWidget className="" />
+        </div>
+        <div>
+          <MyPostWidget />
+          <PostsWidget />
+        </div>
+        <div>
+          <AdvertWidget className="hidden md:block" />
+          <FriendListWidget />
+        </div>
       </div>
     </div>
   )

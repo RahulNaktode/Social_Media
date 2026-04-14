@@ -44,16 +44,16 @@ function Widget() {
     <div className='border border-gray-300 shadow p-3 w-full md:w-80 mt-5 rounded'>
       <div className='flex items-center justify-between border-b-2 border-gray-300 pb-3 cursor-pointer' >
         <div className='flex items-center' onClick={() => navigation(`/profile/${userId}`)}>
-        <div>
-          <img src={photos[0]} alt="Profile" className='w-14 h-14 rounded-full object-cover mb-2' />
+          <div>
+            <img src={photos[0]} alt="Profile" className='w-14 h-14 rounded-full object-cover mb-2' />
+          </div>
+          <div className='ml-4'>
+            <h1 className='text-lg font-bold transition-transform duration-100 hover:scale-102'>{firstName} {lastName}</h1>
+            <p>{friends.length} friends</p>
+          </div>
         </div>
-        <div className='ml-4'>
-          <h1 className='text-lg font-bold transition-transform duration-100 hover:scale-102'>{firstName} {lastName}</h1>
-          <p>{friends.length} friends</p>
-        </div>
-        </div>
-        <UserPen onClick={() => navigation(`/profile/${userId}/edit`)} className='hover:scale-110 transition-transform'/>
-        
+        <UserPen onClick={() => navigation(`/profile/${userId}/edit`)} className='hover:scale-110 transition-transform' />
+
       </div>
 
       <div className='border-b-2 border-gray-300 py-3 hidden md:block'>

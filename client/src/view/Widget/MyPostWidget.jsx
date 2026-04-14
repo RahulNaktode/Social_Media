@@ -40,11 +40,11 @@ function GetWidget() {
         try {
             const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth`);
             const data = await response.json();
-            return { 
-                signature: data.signature, 
-                expire: data.expire, 
-                token: data.token, 
-                publicKey: data.publicKey 
+            return {
+                signature: data.signature,
+                expire: data.expire,
+                token: data.token,
+                publicKey: data.publicKey
             };
         } catch (error) {
             console.error("Auth error:", error);
@@ -115,10 +115,10 @@ function GetWidget() {
         <div className='border border-gray-300 shadow p-5 w-full max-w-140 mt-5 rounded-xl mx-2'>
 
             <div className='flex items-center gap-4'>
-                <img 
-                    src={userData.photos[0]} 
-                    alt="Profile" 
-                    className='w-12 h-12 rounded-full object-cover shadow-sm' 
+                <img
+                    src={userData.photos[0]}
+                    alt="Profile"
+                    className='w-12 h-12 rounded-full object-cover shadow-sm'
                 />
                 <div className='flex-1'>
                     <Input
@@ -133,7 +133,7 @@ function GetWidget() {
             <input
                 type="file"
                 ref={fileInputRef}
-                className='hidden' 
+                className='hidden'
                 accept="image/*"
                 onChange={(e) => e.target.files.length > 0 && handleUpload()}
             />
@@ -147,12 +147,12 @@ function GetWidget() {
 
             {isPhotoUpload && (
                 <div className='relative mt-4 group'>
-                    <img 
-                        src={isPhotoUpload.url} 
-                        alt="Preview" 
-                        className='w-full h-60 object-cover rounded-lg border border-gray-200' 
+                    <img
+                        src={isPhotoUpload.url}
+                        alt="Preview"
+                        className='w-full h-60 object-cover rounded-lg border border-gray-200'
                     />
-                    <button 
+                    <button
                         onClick={removeImage}
                         className='absolute top-2 right-2 bg-red-500 text-white rounded-full p-1.5 shadow-lg hover:bg-red-600 transition duration-200'
                     >
@@ -166,19 +166,19 @@ function GetWidget() {
             <div className='flex items-center justify-between'>
                 <div className='flex items-center gap-10 text-gray-500'>
                     {/* Image trigger icon */}
-                    <div 
+                    <div
                         className='flex items-center gap-2 cursor-pointer hover:text-blue-500 transition'
                         onClick={handleIconClick}
                     >
                         <ImagePlus size={20} />
                         <span className='text-sm font-medium'>Image</span>
                     </div>
-                    
+
                     <div className='flex items-center gap-2 cursor-pointer hover:text-blue-500 transition'>
                         <Clapperboard size={20} />
                         <span className='text-sm font-medium'>Clip</span>
                     </div>
-                    
+
                     <div className='hidden sm:flex items-center gap-2 cursor-pointer hover:text-blue-500 transition'>
                         <Paperclip size={20} />
                         <span className='text-sm font-medium'>Attach</span>
@@ -190,11 +190,11 @@ function GetWidget() {
                     </div>
                 </div>
 
-                <Button 
-                    title='Post' 
-                    size='small' 
-                    variant='primary' 
-                    onClick={postHandle} 
+                <Button
+                    title='Post'
+                    size='small'
+                    variant='primary'
+                    onClick={postHandle}
                     disabled={!posts && !isPhotoUpload} // Khali post disable karein
                 />
             </div>

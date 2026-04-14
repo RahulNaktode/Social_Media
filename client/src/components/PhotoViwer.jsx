@@ -19,22 +19,21 @@ function PhotoPreview({ imageUrl, show, onClose }) {
   if (!show) return null;
 
   return (
-    <div 
+    <div
       className='fixed inset-0 z-100 bg-black/90 flex items-center justify-center p-2 md:p-10 backdrop-blur-md'
       onClick={onClose}
     >
-      {/* Close button - Mobile friendly size and position */}
-      <button 
-        onClick={onClose} 
+      <button
+        onClick={onClose}
         className='absolute top-4 right-4 md:top-8 md:right-8 text-white/70 hover:text-white transition-colors bg-white/10 p-2 rounded-full md:bg-transparent'
       >
         <X size={window.innerWidth < 768 ? 28 : 40} />
       </button>
-      
+
       <div className="w-full h-full flex items-center justify-center">
-        <img 
-          src={imageUrl} 
-          alt="Preview" 
+        <img
+          src={imageUrl}
+          alt="Preview"
           className='max-w-full max-h-[90vh] md:max-h-full rounded-sm md:rounded-lg shadow-2xl object-contain'
           onClick={(e) => e.stopPropagation()}
         />
@@ -48,10 +47,10 @@ function PhotoViewer({ imageUrl, onDelete, showDelete = false }) {
 
   return (
     <div className='group relative w-full flex items-center justify-center rounded-xl overflow-hidden bg-gray-100 border border-gray-200'>
-      <img 
-        src={imageUrl} 
+      <img
+        src={imageUrl}
         alt="Thumbnail"
-        className='w-full aspect-auto md:max-h-125 object-cover cursor-zoom-in transition-transform duration-300 group-hover:scale-105' 
+        className='w-full aspect-auto md:max-h-125 object-cover cursor-zoom-in transition-transform duration-300 group-hover:scale-105'
         onClick={() => setShowPreview(true)}
       />
 
@@ -69,10 +68,10 @@ function PhotoViewer({ imageUrl, onDelete, showDelete = false }) {
 
       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none" />
 
-      <PhotoPreview 
-        imageUrl={imageUrl} 
-        show={showPreview} 
-        onClose={() => setShowPreview(false)} 
+      <PhotoPreview
+        imageUrl={imageUrl}
+        show={showPreview}
+        onClose={() => setShowPreview(false)}
       />
     </div>
   );

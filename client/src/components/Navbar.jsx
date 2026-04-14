@@ -6,7 +6,7 @@ import ColorModeContext from '../context/ColorModeContext';
 import { logoutUser } from '../utils';
 
 function Navbar() {
-  const [userName, setUsername] = useState({}); 
+  const [userName, setUsername] = useState({});
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
 
@@ -24,8 +24,8 @@ function Navbar() {
         SocialMediaGram
       </Link>
 
-      <div 
-        className="hidden md:flex items-center border-2 rounded-xl overflow-hidden" 
+      <div
+        className="hidden md:flex items-center border-2 rounded-xl overflow-hidden"
         style={{ borderColor: theme.palette.divider }}
       >
         <input
@@ -38,7 +38,7 @@ function Navbar() {
           }}
         />
         <div className='p-2 bg-gray-100/10 cursor-pointer'>
-           <Search size={18} />
+          <Search size={18} />
         </div>
       </div>
 
@@ -48,13 +48,13 @@ function Navbar() {
         </div>
 
         <div className="flex items-center gap-2 md:gap-5">
-            <Bell size={25} className="cursor-pointer" />
-            <User size={25} className="cursor-pointer hidden sm:block" />
+          <Bell size={25} className="cursor-pointer" />
+          <User size={25} className="cursor-pointer hidden sm:block" />
         </div>
 
         {userName ? (
-          <button 
-            onClick={() => logoutUser()} 
+          <button
+            onClick={() => logoutUser()}
             className="flex items-center gap-1 font-medium hover:text-red-400 transition"
             style={{ color: textColor }}
           >
