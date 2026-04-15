@@ -12,6 +12,7 @@ import {
   ImageKitUploadNetworkError,
   upload,
 } from "@imagekit/react";
+import toast, { Toaster } from 'react-hot-toast';
 
 function Signup() {
   const [newUser, setNewUser] = useState({
@@ -102,13 +103,13 @@ function Signup() {
     const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/register`, newUser);
 
     if (response.data.success) {
-      alert("User created successfully!");
+      toast.success("User created successfully!");
 
       setTimeout(() => {
-        window.location.href = "/login";
+        window.location.href = "/";
       }, 1500);
     } else {
-      alert("Failed to create user. Please try again.");
+      toast.error("Failed to create user. Please try again.");
     }
   }
 
@@ -172,6 +173,7 @@ function Signup() {
           >Already have an account? Login</Link>
         </div>
       </div>
+      <Toaster/>
     </div>
   )
 }
