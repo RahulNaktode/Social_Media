@@ -11,6 +11,8 @@ import {
     upload,
 } from "@imagekit/react";
 import Button from '../../components/Button.jsx';
+import Avatar from '../../components/Avatar.jsx';
+import toast, { Toaster } from 'react-hot-toast';
 
 function GetWidget() {
     const [posts, setPosts] = useState("");
@@ -89,7 +91,7 @@ function GetWidget() {
     };
 
     const postHandle = async () => {
-        if (!posts && !isPhotoUpload) return alert("Kuch likho ya image select karo!");
+        if (!posts && !isPhotoUpload) return toast.error("Please enter some text or upload a photo to post.");
 
         await axios.post(`${import.meta.env.VITE_API_BASE_URL}/posts`,
             {
@@ -103,6 +105,10 @@ function GetWidget() {
 
         setPosts("");
         setIsPhotoUpload(null);
+
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
     }
 
     useEffect(() => {
@@ -115,11 +121,15 @@ function GetWidget() {
         <div className='border border-gray-300 shadow p-5 w-full max-w-140 mt-5 rounded-xl mx-2'>
 
             <div className='flex items-center gap-4'>
-                <img
-                    src={userData.photos[0]}
-                    alt="Profile"
-                    className='w-12 h-12 rounded-full object-cover shadow-sm'
-                />
+                {userData.photos && userData.photos.length > 0 ? (
+                    <img
+                        src={userData.photos[0]}
+                        alt="Profile"
+                        className='w-12 h-12 rounded-full object-cover shadow-sm'
+                    />
+                ) : (
+                    <Avatar name={userData.firstName} size="large" />
+                )}
                 <div className='flex-1'>
                     <Input
                         placeholder="What's on your mind?"
@@ -198,6 +208,7 @@ function GetWidget() {
                     disabled={!posts && !isPhotoUpload} // Khali post disable karein
                 />
             </div>
+            <Toaster />
         </div>
     );
 }

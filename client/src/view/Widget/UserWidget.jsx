@@ -4,7 +4,7 @@ import axios from 'axios';
 import { MapPin, BriefcaseBusiness, UserPen } from 'lucide-react';
 import LinkedinImg from './../../assets/linkedin.png';
 import TwitterImg from '../../assets/twitter.png';
-import ProfilePage from '../ProfilePage.jsx';
+import Avatar from '../../components/Avatar.jsx';
 import { useNavigate, Link } from 'react-router';
 
 function Widget() {
@@ -45,7 +45,15 @@ function Widget() {
       <div className='flex items-center justify-between border-b-2 border-gray-300 pb-3 cursor-pointer' >
         <div className='flex items-center' onClick={() => navigation(`/profile/${userId}`)}>
           <div>
-            <img src={photos[0]} alt="Profile" className='w-14 h-14 rounded-full object-cover mb-2' />
+            {photos && photos.length > 0 ? (
+              <img 
+                src={photos[0]} 
+                alt="Profile" 
+                className='w-14 h-14 rounded-full object-cover mb-2' 
+              />
+            ) : (
+              <Avatar name={firstName} />
+            )}
           </div>
           <div className='ml-4'>
             <h1 className='text-lg font-bold transition-transform duration-100 hover:scale-102'>{firstName} {lastName}</h1>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { getUserJwtToken, getUserData } from './../utils.jsx';
 import axios from 'axios';
+import Avatar from './Avatar.jsx';
 import { UserPlus, UserMinus } from 'lucide-react';
 
 function Friend({ friendId, name, subtitle, userPicturePath }) {
@@ -55,13 +56,15 @@ function Friend({ friendId, name, subtitle, userPicturePath }) {
             <div className='flex gap-3 items-center cursor-pointer '
                 onClick={() => navigation(`/profile/${friendId}`)}
             >
-                {userPicturePath && (
-                    <img
-                        src={userPicturePath}
-                        alt="user"
-                        className="w-10 h-10 rounded-full object-cover hover:scale-110 transition-transform"
-                    />
-                )}
+                {userPicturePath ? (
+          <img
+            src={userPicturePath}
+            alt={name}
+            className="w-11 h-11 rounded-full object-cover"
+          />
+        ) : (
+          <Avatar name={name} /> 
+        )}
                 <div>
                     <div className='font-bold text-lg hover:scale-110 transition-transform'>{name}</div>
                     <div className='text-gray-500 text-sm'>{subtitle}</div>
