@@ -7,7 +7,7 @@ import TwitterImg from '../../assets/twitter.png';
 import Avatar from '../../components/Avatar.jsx';
 import { useNavigate, Link } from 'react-router';
 
-function Widget() {
+function UserWidget() {
   const [userData, setUserData] = useState(null);
   const userId = getUserData()._id;
   const navigation = useNavigate();
@@ -96,4 +96,4 @@ function Widget() {
   )
 }
 
-export default Widget
+export default UserWidget;

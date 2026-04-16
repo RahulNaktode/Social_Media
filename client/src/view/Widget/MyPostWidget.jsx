@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { getUserJwtToken, getUserData } from '../../utils.jsx';
 import axios from 'axios';
 import Input from '../../components/Input.jsx';
-import { ImagePlus, Clapperboard, Paperclip, Mic, X } from 'lucide-react'; // X icon add kiya
+import { ImagePlus, Clapperboard, Paperclip, Mic, X } from 'lucide-react';
 import {
     ImageKitAbortError,
     ImageKitInvalidRequestError,
@@ -13,13 +13,15 @@ import {
 import Button from '../../components/Button.jsx';
 import Avatar from '../../components/Avatar.jsx';
 import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router';
 
-function GetWidget() {
+function MyPostWidget() {
     const [posts, setPosts] = useState("");
     const [userData, setUserData] = useState(null);
     const [isPhotoUpload, setIsPhotoUpload] = useState(null);
     const [progress, setProgress] = useState(0);
     const fileInputRef = useRef();
+    const navigate = useNavigate();
 
     const userId = getUserData()._id;
 
@@ -93,7 +95,7 @@ function GetWidget() {
     const postHandle = async () => {
         if (!posts && !isPhotoUpload) return toast.error("Please enter some text or upload a photo to post.");
 
-        await axios.post(`${import.meta.env.VITE_API_BASE_URL}/posts`,
+        const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/posts`,
             {
                 userId,
                 description: posts,
@@ -103,12 +105,14 @@ function GetWidget() {
                 headers: { Authorization: `Bearer ${getUserJwtToken()}` }
             });
 
+            if(response.data){
+                toast.success("Post created successfully!");
+            }
+
         setPosts("");
         setIsPhotoUpload(null);
-
-        setTimeout(() => {
-            window.location.reload();
-        }, 1000);
+        navigate(0);
+        
     }
 
     useEffect(() => {
@@ -175,7 +179,6 @@ function GetWidget() {
 
             <div className='flex items-center justify-between'>
                 <div className='flex items-center gap-10 text-gray-500'>
-                    {/* Image trigger icon */}
                     <div
                         className='flex items-center gap-2 cursor-pointer hover:text-blue-500 transition'
                         onClick={handleIconClick}
@@ -205,7 +208,7 @@ function GetWidget() {
                     size='small'
                     variant='primary'
                     onClick={postHandle}
-                    disabled={!posts && !isPhotoUpload} // Khali post disable karein
+                    disabled={!posts && !isPhotoUpload}
                 />
             </div>
             <Toaster />
@@ -213,4 +216,4 @@ function GetWidget() {
     );
 }
 
-export default GetWidget;
+export default MyPostWidget;

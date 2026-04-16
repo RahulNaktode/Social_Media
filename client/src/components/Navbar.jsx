@@ -58,7 +58,7 @@ function Navbar() {
             className="flex items-center gap-1 font-medium hover:text-red-400 transition"
             style={{ color: textColor }}
           >
-            <span className="hidden md:inline">Logout</span>
+            <span className="hidden md:inline cursor-pointer">Logout</span>
             <LogOut size={20} className="md:hidden" />
           </button>
         ) : (

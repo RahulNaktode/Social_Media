@@ -8,7 +8,7 @@ import { UserPlus, UserMinus } from 'lucide-react';
 function Friend({ friendId, name, subtitle, userPicturePath }) {
     const user = getUserData();
     const userId = user?._id;
-    const navigation = useNavigate();
+    const navigate = useNavigate();
 
     const [friendsList, setFriendsList] = useState([]);
 
@@ -28,7 +28,7 @@ function Friend({ friendId, name, subtitle, userPicturePath }) {
 
             setFriendsList(response.data.data);
             setTimeout(() => {
-                window.location.reload();
+                navigate(0); // Page refresh karne ke liye
             }, 100);
         } catch (err) {
             console.error("Error updating friend:", err);
@@ -54,7 +54,8 @@ function Friend({ friendId, name, subtitle, userPicturePath }) {
     return (
         <div className='flex items-center justify-between p-2'>
             <div className='flex gap-3 items-center cursor-pointer '
-                onClick={() => navigation(`/profile/${friendId}`)}
+                onClick={() => navigate(`/profile/${friendId}`)}
+                
             >
                 {userPicturePath ? (
           <img
