@@ -68,7 +68,7 @@ const getUserFriends = async (req, res) => {
 
 const updateUser = async (req, res) => {
     try {
-        const { userId } = req.params; // ✅ req.user se nahi, params se lo
+        const { userId } = req.params; 
 
         if (!userId) {
             return res.json({
@@ -91,7 +91,7 @@ const updateUser = async (req, res) => {
                 message: "User not found"
             });
         }
-        
+
         await Post.updateMany(
             { userId: userId },
             {

@@ -152,7 +152,6 @@ function MyPostWidget() {
                 onChange={(e) => e.target.files.length > 0 && handleUpload()}
             />
 
-            {/* Progress Bar */}
             {progress > 0 && (
                 <div className="w-full bg-gray-100 h-1 mt-3 rounded-full overflow-hidden">
                     <div className="bg-blue-500 h-full transition-all" style={{ width: `${progress}%` }}></div>

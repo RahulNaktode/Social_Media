@@ -88,7 +88,6 @@ function PostWidget({ postId, postUserId, name, description, location, picturePa
       <div className='flex items-center justify-between mt-5'>
         <div className='flex items-center gap-4'>
 
-          {/* Like Section */}
           <div className='flex items-center gap-1'>
             {isLiked ? (
               <FavoriteOutlined
@@ -107,7 +106,6 @@ function PostWidget({ postId, postUserId, name, description, location, picturePa
             <span className='text-sm font-medium'>{likesCount}</span>
           </div>
 
-          {/* Comment Icon (Toggle) */}
           <div
             className='flex items-center gap-1 cursor-pointer hover:opacity-70'
             onClick={() => setIsComments(!isComments)}
@@ -135,7 +133,7 @@ function PostWidget({ postId, postUserId, name, description, location, picturePa
               placeholder="Add a comment..."
               value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handlePostComment()} // Enter press karne par post ho jaye
+              onKeyDown={(e) => e.key === 'Enter' && handlePostComment()}
               className='flex-1 border border-gray-200 rounded-full px-4 py-1 text-sm outline-none focus:border-blue-400 bg-gray-50'
             />
             <button

@@ -7,11 +7,11 @@ import { useParams } from 'react-router'
 import { getUserData } from '../../utils.jsx'
 
 function ProfilePage() {
-  const { userId } = useParams(); // ✅ URL se userId lo
+  const { userId } = useParams();
   const loggedInUserId = getUserData()._id;
-  const isOwnProfile = userId === loggedInUserId; // ✅ Check karo apna profile hai ya kisi aur ka
+  const isOwnProfile = userId === loggedInUserId;
 
-  console.log("ALL PARAMS:", useParams()); // ✅ ye add karo
+  console.log("ALL PARAMS:", useParams());
   console.log("userId:", userId);
 
   return (
@@ -26,7 +26,7 @@ function ProfilePage() {
         </div>
 
         <div className='flex flex-col gap-5 md:basis-2/3'>
-          {isOwnProfile && <MyPostWidget />} {/* ✅ Sirf apne profile par post box dikhao */}
+          {isOwnProfile && <MyPostWidget />} 
           <PostsWidget isProfile userId={userId} />
         </div>
 

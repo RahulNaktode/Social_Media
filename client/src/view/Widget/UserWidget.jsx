@@ -7,7 +7,7 @@ import TwitterImg from '../../assets/twitter.png';
 import Avatar from '../../components/Avatar.jsx';
 import { useNavigate, Link } from 'react-router';
 
-function UserWidget({ userId, isOwnProfile }) { // ✅ Props se userId lo
+function UserWidget({ userId, isOwnProfile }) { 
   const [userData, setUserData] = useState(null);
   const navigation = useNavigate();
 
@@ -55,7 +55,6 @@ function UserWidget({ userId, isOwnProfile }) { // ✅ Props se userId lo
           </div>
         </div>
 
-        {/* ✅ Sirf apne profile par edit button dikhao */}
         {isOwnProfile && (
           <UserPen
             onClick={() => navigation(`/profile/${userId}/edit`)}

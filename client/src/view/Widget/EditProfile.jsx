@@ -189,7 +189,6 @@ function EditProfile() {
                         className='px-2 py-1 my-2 text-lg border border-gray-400 w-full hover:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
                     />
 
-                    {/* Progress Bar */}
                     {progress > 0 && (
                         <div className="w-full bg-gray-100 h-1 mt-1 mb-2 rounded-full overflow-hidden">
                             <div

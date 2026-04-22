@@ -45,7 +45,7 @@ const createPost = async (req, res) => {
 
 const getFeedPosts = async (req, res) => {
     try {
-        const posts = await Post.find(); // ✅ populate hatao
+        const posts = await Post.find();
         return res.json({
             success: true,
             message: "Posts fetched successfully",
@@ -60,11 +60,10 @@ const getFeedPosts = async (req, res) => {
     }
 }
 
-// getUserPosts
 const getUserPosts = async (req, res) => {
     try {
         const { userId } = req.params;
-        const post = await Post.find({ userId }); // ✅ populate hatao
+        const post = await Post.find({ userId }); 
         return res.json({
             success: true,
             message: "User posts fetched successfully",
@@ -124,14 +123,13 @@ const likePost = async (req, res) => {
 
 const addComment = async (req, res) => {
   try {
-    const { id } = req.params; // Post ID URL se milegi
-    const { comment } = req.body; // Comment text body se milega
+    const { id } = req.params;
+    const { comment } = req.body; 
 
-    // Post dhund kar uske comments array mein naya comment add karein
     const updatedPost = await Post.findByIdAndUpdate(
       id,
-      { $push: { comments: comment } }, // MongoDB $push operator ka use karein
-      { new: true } // Taaki update hone ke baad naya data return ho
+      { $push: { comments: comment } },
+      { new: true } 
     );
 
     if (!updatedPost) {

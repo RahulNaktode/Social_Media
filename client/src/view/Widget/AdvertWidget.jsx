@@ -1,10 +1,8 @@
 import React from 'react'
 import AdvertImg from "../../assets/advert.png"
 
-// className prop add kara
 function AdvertWidget({ className }) {
   return (
-    // yethe `${className}` vapara
     <div className={`border border-gray-300 shadow px-5 py-6 w-80 mt-5 rounded ${className}`}>
       <h1 className='text-xl font-bold'>Sponsored</h1>
       <div className='flex justify-between items-center'>

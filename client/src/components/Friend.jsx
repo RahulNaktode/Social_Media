@@ -27,7 +27,6 @@ function Friend({ friendId, name, subtitle, userPicturePath, onFriendUpdate }) {
 
             setFriendsList(response.data.data);
 
-            // ✅ navigate(0) ki jagah callback use karo
             if (onFriendUpdate) {
                 onFriendUpdate();
             }

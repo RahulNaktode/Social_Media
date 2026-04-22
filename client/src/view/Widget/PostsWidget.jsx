@@ -3,7 +3,7 @@ import { getUserJwtToken } from '../../utils';
 import { useState, useEffect } from 'react';
 import PostWidget from './PostWidget';
 
-function PostsWidget({ isProfile = false, userId }) { // ✅ Props se userId lo
+function PostsWidget({ isProfile = false, userId }) {
     const [posts, setPosts] = useState([]);
 
     const getPosts = async () => {
@@ -32,12 +32,11 @@ function PostsWidget({ isProfile = false, userId }) { // ✅ Props se userId lo
         } else {
             getPosts();
         }
-    }, [isProfile, userId]); // ✅ userId change hone par refetch karo
+    }, [isProfile, userId]);
 
     return (
         <div>
         {posts.map((post) => {
-            // ✅ populate ki wajah se user data post.userId mein hai
             const postUser = post.userId;
 
             return (
@@ -56,7 +55,7 @@ function PostsWidget({ isProfile = false, userId }) { // ✅ Props se userId lo
             );
         })}
     </div>
-    
+
     )
 }
 
