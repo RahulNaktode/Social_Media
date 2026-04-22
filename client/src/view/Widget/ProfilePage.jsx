@@ -1,8 +1,8 @@
-import Navbar from '../components/Navbar'
-import UserWidget from './Widget/UserWidget.jsx'
-import FriendListWidget from './Widget/FriendListWidget'
-import MyPostWidget from './Widget/MyPostWidget.jsx'
-import PostsWidget from './Widget/PostsWidget'
+import Navbar from './../../components/Navbar.jsx'
+import UserWidget from './UserWidget.jsx'
+import FriendListWidget from './FriendListWidget'
+import MyPostWidget from './MyPostWidget.jsx'
+import PostsWidget from './PostsWidget'
 
 function ProfilePage() {
   return (

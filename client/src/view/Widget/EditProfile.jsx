@@ -1,8 +1,7 @@
 import { useEffect } from 'react'
-import Input from '../components/Input.jsx'
-import Button from '../components/Button.jsx'
-import SubNavbar from '../components/SubNavbar.jsx'
-import { Link } from 'react-router'
+import Input from '../../components/Input.jsx'
+import Button from '../../components/Button.jsx'
+import SubNavbar from './../../components/SubNavbar.jsx'
 import { useState, useRef } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import axios from 'axios'
@@ -13,7 +12,7 @@ import {
     ImageKitUploadNetworkError,
     upload,
 } from "@imagekit/react";
-import { getUserJwtToken } from '../utils.jsx';
+import { getUserJwtToken } from '../../utils.jsx';
 import { useParams } from 'react-router';
 
 function EditProfile() {
@@ -31,7 +30,6 @@ function EditProfile() {
     const fileInputRef = useRef();
 
     const { userId } = useParams();
-    console.log("User ID from URL:", userId);
 
     const authenticator = async () => {
         try {
@@ -81,18 +79,12 @@ function EditProfile() {
                 },
             });
 
-            setExistingUser((prev) => {
-                const updatedData = {
-                    ...prev,
-                    photos: [uploadResponse.url]
-                };
-                localStorage.setItem("userData", JSON.stringify(updatedData));
+            setExistingUser((prev) => ({
+                ...prev,
+                photos: [uploadResponse.url]
+            }));
 
-                return updatedData;
-            })
-
-
-            setProgress(0)
+            setProgress(0);
             fileInput.value = "";
         } catch (error) {
             if (error instanceof ImageKitAbortError) {
@@ -110,44 +102,46 @@ function EditProfile() {
     };
 
     const editUser = async () => {
-        const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/user/${userId}`, existingUser, {
-            headers: {
-                Authorization: `Bearer ${getUserJwtToken()}`,
+        try {
+            const response = await axios.put(
+                `${import.meta.env.VITE_API_BASE_URL}/user/${userId}`,
+                existingUser,
+                {
+                    headers: {
+                        Authorization: `Bearer ${getUserJwtToken()}`,
+                    }
+                }
+            );
+
+            if (response.data.success) {
+                toast.success(response.data.message, { id: "addTourSuccess" });
+
+                localStorage.setItem("userData", JSON.stringify(response.data.data));
+
+                setTimeout(() => {
+                    window.location.href = `/profile/${userId}`;
+                }, 1000);
+            } else {
+                toast.error(response.data.message, { id: "addTourError" });
             }
-        });
-
-        if (response.data.success) {
-            toast.success(response.data.message, { id: "addTourSuccess" });
-            setExistingUser({
-                firstName: '',
-                lastName: '',
-                email: '',
-                photos: [],
-                password: '',
-                location: '',
-                occupation: ''
-            });
-
-            setTimeout(() => {
-                window.location.href = `/profile/${userId}`;
-            }, 1000);
-        } else {
-            toast.error(response.data.message, { id: "addTourError" });
+        } catch (error) {
+            toast.error("Something went wrong!", { id: "editUserError" });
         }
     }
 
     const loadUserDetails = async () => {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/${userId}`, {
-            headers: {
-                Authorization: `Bearer ${getUserJwtToken()}`,
+        const response = await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/user/${userId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${getUserJwtToken()}`,
+                }
             }
-        });
+        );
 
         if (response.data.success) {
             toast.success(response.data.message, { id: "loadTourDetailsSuccess" });
-            setExistingUser({
-                ...response.data.data
-            });
+            setExistingUser({ ...response.data.data });
         } else {
             toast.error(response.data.message, { id: "loadTourDetailsError" });
         }
@@ -170,7 +164,9 @@ function EditProfile() {
                         value={existingUser.firstName}
                         onChange={(e) => setExistingUser({ ...existingUser, firstName: e.target.value })}
                     />
-                    <Input type={"text"} placeholder={"Last Name"}
+                    <Input
+                        type={"text"}
+                        placeholder={"Last Name"}
                         value={existingUser.lastName}
                         onChange={(e) => setExistingUser({ ...existingUser, lastName: e.target.value })}
                     />
@@ -191,25 +187,45 @@ function EditProfile() {
                         ref={fileInputRef}
                         onChange={handleUpload}
                         className='px-2 py-1 my-2 text-lg border border-gray-400 w-full hover:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-
                     />
 
-                    <Input type={"text"} placeholder={"Email"}
+                    {/* Progress Bar */}
+                    {progress > 0 && (
+                        <div className="w-full bg-gray-100 h-1 mt-1 mb-2 rounded-full overflow-hidden">
+                            <div
+                                className="bg-blue-500 h-full transition-all"
+                                style={{ width: `${progress}%` }}
+                            ></div>
+                        </div>
+                    )}
+
+                    <Input
+                        type={"text"}
+                        placeholder={"Email"}
                         value={existingUser.email}
                         onChange={(e) => setExistingUser({ ...existingUser, email: e.target.value })}
                     />
 
-                    <Input type={"text"} placeholder={"Location"}
+                    <Input
+                        type={"text"}
+                        placeholder={"Location"}
                         value={existingUser.location}
                         onChange={(e) => setExistingUser({ ...existingUser, location: e.target.value })}
                     />
-                    <Input type={"text"} placeholder={"Occupation"}
+
+                    <Input
+                        type={"text"}
+                        placeholder={"Occupation"}
                         value={existingUser.occupation}
                         onChange={(e) => setExistingUser({ ...existingUser, occupation: e.target.value })}
                     />
 
-                    <Button title={"Update Profile"} variant={"primary"} size={"medium"} onClick={editUser} />
-
+                    <Button
+                        title={"Update Profile"}
+                        variant={"primary"}
+                        size={"medium"}
+                        onClick={editUser}
+                    />
                 </div>
             </div>
             <Toaster />

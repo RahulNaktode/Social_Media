@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import Post from "../models/Post.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -66,46 +67,56 @@ const getUserFriends = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-  try {
+    try {
+        const { userId } = req.params; // ✅ req.user se nahi, params se lo
 
-    const userId = req.user?.id;
+        if (!userId) {
+            return res.json({
+                success: false,
+                message: "User ID missing"
+            });
+        }
 
-    if (!userId) {
-      return res.json({
-        success: false,
-        message: "Unauthorized"
-      });
+        const { firstName, lastName, email, photos, location, occupation } = req.body;
+
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { firstName, lastName, email, photos, location, occupation },
+            { new: true, runValidators: true }
+        ).select("-password");
+
+        if (!updatedUser) {
+            return res.json({
+                success: false,
+                message: "User not found"
+            });
+        }
+        
+        await Post.updateMany(
+            { userId: userId },
+            {
+                $set: {
+                    firstName: updatedUser.firstName,
+                    lastName: updatedUser.lastName,
+                    location: updatedUser.location,
+                    userPhotos: updatedUser.photos,
+                }
+            }
+        );
+
+        return res.json({
+            success: true,
+            message: "Profile updated successfully",
+            data: updatedUser
+        });
+
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: error.message
+        });
     }
-
-    const { firstName, lastName, email, photos, location, occupation } = req.body;
-
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      { firstName, lastName, email, photos, location, occupation },
-      { new: true, runValidators: true }
-    ).select("-password");
-
-    if (!updatedUser) {
-      return res.json({
-        success: false,
-        message: "User not found"
-      });
-    }
-
-    return res.json({
-      success: true,
-      message: "Profile updated successfully",
-      data: updatedUser
-    });
-
-  } catch (error) {
-    return res.json({
-      success: false,
-      message: error.message
-    });
-  }
 };
-
 
 const addRemoveFriends = async (req, res) => {
     try {
@@ -114,15 +125,12 @@ const addRemoveFriends = async (req, res) => {
         const friend = await User.findById(friendId);
 
         if (user.friends.includes(friendId)) {
-            // Remove from both
             await User.findByIdAndUpdate(id, { $pull: { friends: friendId } });
             await User.findByIdAndUpdate(friendId, { $pull: { friends: id } });
         } else {
-            // Add to both
             await User.findByIdAndUpdate(id, { $push: { friends: friendId } });
             await User.findByIdAndUpdate(friendId, { $push: { friends: id } });
         }
-
 
         const updatedUser = await User.findById(id).populate("friends");
 
@@ -145,7 +153,6 @@ const addRemoveFriends = async (req, res) => {
             data: null
         });
     }
-
 }
 
 export { getUser, getUserFriends, addRemoveFriends, updateUser };
