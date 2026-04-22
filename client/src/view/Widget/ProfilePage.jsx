@@ -3,23 +3,33 @@ import UserWidget from './UserWidget.jsx'
 import FriendListWidget from './FriendListWidget'
 import MyPostWidget from './MyPostWidget.jsx'
 import PostsWidget from './PostsWidget'
+import { useParams } from 'react-router'
+import { getUserData } from '../../utils.jsx'
 
 function ProfilePage() {
+  const { userId } = useParams(); // ✅ URL se userId lo
+  const loggedInUserId = getUserData()._id;
+  const isOwnProfile = userId === loggedInUserId; // ✅ Check karo apna profile hai ya kisi aur ka
+
+  console.log("ALL PARAMS:", useParams()); // ✅ ye add karo
+  console.log("userId:", userId);
+
   return (
-    <div  >
+    <div>
       <Navbar />
 
       <div className='flex flex-col md:flex-row justify-center gap-10 mx-5 md:mx-20 py-8'>
 
         <div className='flex flex-col gap-5 md:basis-1/3'>
-          <UserWidget />
-          <FriendListWidget />
+          <UserWidget userId={userId} isOwnProfile={isOwnProfile} />
+          <FriendListWidget userId={userId} />
         </div>
 
         <div className='flex flex-col gap-5 md:basis-2/3'>
-          <MyPostWidget />
-          <PostsWidget isProfile />
+          {isOwnProfile && <MyPostWidget />} {/* ✅ Sirf apne profile par post box dikhao */}
+          <PostsWidget isProfile userId={userId} />
         </div>
+
       </div>
     </div>
   )

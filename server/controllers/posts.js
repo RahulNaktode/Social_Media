@@ -44,14 +44,14 @@ const createPost = async (req, res) => {
 }
 
 const getFeedPosts = async (req, res) => {
-    try{
-        const posts = await Post.find().populate("userId");   
+    try {
+        const posts = await Post.find(); // ✅ populate hatao
         return res.json({
             success: true,
             message: "Posts fetched successfully",
             data: posts
         })
-    }catch(error){
+    } catch (error) {
         return res.json({
             success: false,
             message: `Error fetching posts: ${error.message}`,
@@ -60,16 +60,17 @@ const getFeedPosts = async (req, res) => {
     }
 }
 
+// getUserPosts
 const getUserPosts = async (req, res) => {
-    try{
+    try {
         const { userId } = req.params;
-        const post = await Post.find({ userId }).populate("userId");
+        const post = await Post.find({ userId }); // ✅ populate hatao
         return res.json({
             success: true,
             message: "User posts fetched successfully",
             data: post
         })
-    }catch(error){
+    } catch (error) {
         return res.json({
             success: false,
             message: `Error fetching user posts: ${error.message}`,

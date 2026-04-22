@@ -5,7 +5,7 @@ import axios from 'axios';
 import Avatar from './Avatar.jsx';
 import { UserPlus, UserMinus } from 'lucide-react';
 
-function Friend({ friendId, name, subtitle, userPicturePath }) {
+function Friend({ friendId, name, subtitle, userPicturePath, onFriendUpdate }) {
     const user = getUserData();
     const userId = user?._id;
     const navigate = useNavigate();
@@ -24,12 +24,13 @@ function Friend({ friendId, name, subtitle, userPicturePath }) {
                 {},
                 { headers: { Authorization: `Bearer ${getUserJwtToken()}` } }
             );
-            console.log("Friend update response:", response.data);
 
             setFriendsList(response.data.data);
-            setTimeout(() => {
-                navigate(0); // Page refresh karne ke liye
-            }, 100);
+
+            // ✅ navigate(0) ki jagah callback use karo
+            if (onFriendUpdate) {
+                onFriendUpdate();
+            }
         } catch (err) {
             console.error("Error updating friend:", err);
         }
@@ -42,7 +43,6 @@ function Friend({ friendId, name, subtitle, userPicturePath }) {
                 const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/${userId}`, {
                     headers: { Authorization: `Bearer ${getUserJwtToken()}` }
                 });
-
                 setFriendsList(res.data.data?.friends || []);
             } catch (err) {
                 console.error("Error fetching user:", err);
@@ -53,19 +53,19 @@ function Friend({ friendId, name, subtitle, userPicturePath }) {
 
     return (
         <div className='flex items-center justify-between p-2'>
-            <div className='flex gap-3 items-center cursor-pointer '
+            <div
+                className='flex gap-3 items-center cursor-pointer'
                 onClick={() => navigate(`/profile/${friendId}`)}
-                
             >
                 {userPicturePath ? (
-          <img
-            src={userPicturePath}
-            alt={name}
-            className="w-11 h-11 rounded-full object-cover"
-          />
-        ) : (
-          <Avatar name={name} /> 
-        )}
+                    <img
+                        src={userPicturePath}
+                        alt={name}
+                        className="w-11 h-11 rounded-full object-cover"
+                    />
+                ) : (
+                    <Avatar name={name} />
+                )}
                 <div>
                     <div className='font-bold text-lg hover:scale-110 transition-transform'>{name}</div>
                     <div className='text-gray-500 text-sm'>{subtitle}</div>

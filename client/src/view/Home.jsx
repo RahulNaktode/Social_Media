@@ -7,14 +7,15 @@ import AdvertWidget from './Widget/AdvertWidget.jsx'
 import FriendListWidget from './Widget/FriendListWidget.jsx'
 import { getUserData } from '../utils.jsx'
 
-
 function Home() {
+  const userId = getUserData()?._id; // ✅ logged in user ka id lo
+
   return (
     <div>
       <Navbar />
       <div className='md:flex md:mx-40 gap-10'>
         <div>
-          <UserWidget className="" />
+          <UserWidget userId={userId} isOwnProfile={true} /> {/* ✅ userId pass karo */}
         </div>
         <div>
           <MyPostWidget />
@@ -22,7 +23,7 @@ function Home() {
         </div>
         <div>
           <AdvertWidget className="hidden md:block" />
-          <FriendListWidget />
+          <FriendListWidget userId={userId} /> {/* ✅ userId pass karo */}
         </div>
       </div>
     </div>
